@@ -31,8 +31,8 @@
                                 @if(Auth::user()->role!=1)
                                 <div class="col-md-8 mb-3">
 
-                                    <a href="{{ route('add-members') }}" class="btn btn-success">
-                                        <i class="fa fa-plus"></i>&nbsp;{{ $addText }}</a>
+                                    {{-- <a href="{{ route('add-members') }}" class="btn btn-success">
+                                        <i class="fa fa-plus"></i>&nbsp;{{ $addText }}</a> --}}
                                 </div>
                                 @endif
 
@@ -44,9 +44,9 @@
                                             <th>FIRST NAME</th>
                                             <th>LAST NAME</th>
                                             <th>PHONE</th>
-                                            <th>ADDRESS</th>
+                                            <th>category</th>
                                             <th>REASONS</th>
-                                            <th>DESCRIPTION</th>
+                                            <th>Amount</th>
                                             <th>CREATED BY</th>
                                             <th>UPDATED AT</th>
 
@@ -96,14 +96,14 @@
           </button>
         </div>
         <div class="modal-body">
-        <form role="form" id="add-support" action="{{ route('manage-support-save') }}" name="add-support"
+        <form role="form" id="add-support" action="{{ route('manage-support-update') }}" name="add-support"
             method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
             <div class="col-md-12 mb-3">
                 <div class="form-group">
 
-                    <input type="hidden" class="form-control" id="member_id" name="member_id">
+                    <input type="hidden" class="form-control" id="support_id" name="support_id">
 
                 </div>
             </div>
@@ -117,7 +117,7 @@
             <div class="col-md-12 mb-3">
                 <div class="form-group">
                     <label for="last_name">Amount <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="amaunt" name="amount" placeholder="Amount in Rwandan Franc">
+                    <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount in Rwandan Franc">
 
                 </div>
             </div>
@@ -160,7 +160,7 @@
                         [0, "desc"]
                     ],
 
-                    "ajax": "{{ route('getMembersListAjax') }}",
+                    "ajax": "{{ route('getSupportListAjax') }}",
                     "dataSrc": "data",
                     "fnDrawCallback": function() {
                         $('.toggle-class').bootstrapToggle();
@@ -184,11 +184,7 @@
                             name: 'phone'
 
                         },
-                        {
-                            data: 'address',
-                            name: 'address'
 
-                        },
                         {
                             data: 'category_name',
                             name: 'category_name'
@@ -197,6 +193,11 @@
                         {
                             data: 'description',
                             name: 'description'
+
+                        },
+                        {
+                            data: 'amount',
+                            name: 'amount'
 
                         },
                         {
@@ -384,11 +385,14 @@
 
             $(document).on('click', '.add-support', function() {
                 var name = $(this).attr('data-name');
-                var member_id = $(this).attr('data-member-id');
+                var support_id = $(this).attr('data-support-id');
+                var reasons = $(this).attr('data-reason');
+                var amount = $(this).attr('data-amount');
 
-console.log(member_id);
                 $('#exampleModalLabel2').html(name);
-                $("#member_id").val(member_id)
+                $("#support_id").val(support_id);
+                $("#reason").val(reasons);
+                $("#amount").val(amount);
 
 
             });
@@ -442,7 +446,7 @@ console.log(member_id);
         });
 
         $.ajax({
-            url: "{{ route('manage-support-save') }}",
+            url: "{{ route('manage-support-update') }}",
             type: "POST",
             dataType: "json",
             data: form_data,
@@ -455,7 +459,7 @@ console.log(member_id);
             },
             success: function(result) {
                 if (result.status == 201) {
-                    window.location.href = "{{ route('manage-members') }}";
+                    window.location.href = "{{ route('manage-support') }}";
                 }
             },
             error: function(error) {

@@ -10,6 +10,11 @@
                 </li>
 
               @endcan
+              @can('Manage-Supports')
+                <li><a href="{{ route('manage-support') }}" class="nav_logo"><i class="fa fa-cog" aria-hidden="true"></i>
+                        <span class="nav_logo-name">Manage Supports</span> </a>
+                </li>
+                @endcan
               @can('Manage-Centrale')
               <li><a href="{{ route('manage-centrales') }}" class="nav_logo"><i class="fa fa-align-center fa-lg" aria-hidden="true"></i>
                 <span class="nav_logo-name">Manage Centrale</span> </a>

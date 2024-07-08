@@ -71,6 +71,7 @@ public function updateExistUser(array $data)
     protected $hidden = [
 
         'password',
+        'remember_token'
 
     ];
     public function getAllUsersAjax($role='') {

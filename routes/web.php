@@ -112,3 +112,13 @@ Route::group(['prefix' => '/communities', 'middleware' => ['auth','nocache','can
     Route::post('view-community','CommunityController@viewCommunity')->name('view-community');
 });
 
+#support
+Route::group(['prefix' => '/support', 'middleware' => ['auth','nocache','can:Manage-Supports'], 'namespace' => 'App\Http\Controllers', 'page-group' => '/support'], function () {
+    Route::any('/list-support','SupportController@getSupportListAjax')->name('getSupportListAjax');
+    Route::post('/save-support', 'SupportController@store')->name('manage-support-save');
+    Route::post('/update-support', 'SupportController@update')->name('manage-support-update');
+    Route::get('/support', 'SupportController@index')->name('manage-support');
+
+}
+)
+;

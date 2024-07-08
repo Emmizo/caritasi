@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MemberController;
+use App\Http\Controllers\API\DashboardController;
 
 Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -29,4 +30,11 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api']
     Route::post('/create-member', [MemberController::class, 'store']);
     Route::get('/accept',[memberController::class,'status']);
     // Route::post('/reject',[memberController::class, 'status'])->name('update-profile');
+});
+
+#Manage Dashboard
+
+Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api'], function () {
+    Route::get('dashboard',[DashboardController::class,'index']);
+
 });
