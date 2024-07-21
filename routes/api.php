@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\MemberController;
 use App\Http\Controllers\API\DashboardController;
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\SupportController;
 
+#open API
 Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('forget-password-api', [AuthController::class,'forgetPassword']);
@@ -13,6 +16,7 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
     Route::get('/reset-pass/{token}', [AuthController::class, 'create'])
                 ->middleware('guest')
                 ->name('password.reset');
+    Route::get('/list-category',[CategoryController::class,'index']);
   });
 #Manage Authentication and Users APIs
 Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api'], function () {
@@ -27,8 +31,8 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api']
 
 Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api'], function () {
     Route::get('list-members',[MemberController::class,'index']);
-    Route::post('/create-member', [MemberController::class, 'store']);
-    Route::get('/accept',[memberController::class,'status']);
+    Route::post('create-member', [MemberController::class, 'store']);
+    Route::post('/approval',[MemberController::class,'status']);
     // Route::post('/reject',[memberController::class, 'status'])->name('update-profile');
 });
 
@@ -36,5 +40,6 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api']
 
 Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api'], function () {
     Route::get('dashboard',[DashboardController::class,'index']);
+    Route::post('add-support',[SupportController::class,'store']);
 
 });

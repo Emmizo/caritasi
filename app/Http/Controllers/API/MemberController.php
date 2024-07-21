@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Member;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class MemberController extends Controller
@@ -39,8 +40,7 @@ class MemberController extends Controller
     public function store(Request $request)
     {
 
-        $validator = $request->validate([
-            'first_name' => 'required',
+        $validator = Validator::make($request->all(), [
             'last_name' => 'required',
             'cat_id' =>'required',
             'phone' => 'required|unique:members,phone',
@@ -65,6 +65,7 @@ class MemberController extends Controller
         $member->bod = $request->dob;
         $member->description = $request->description;
         $member->user_id = Auth::user()->id;
+        ($request->cat_id ==1 ? $member->hospital=$request->hospital:$request->cat_id ==2 )? $member->school_name=$request->school_name && $member->sdms_code=$request->sdms_code : $member->other_support=$request->other_support;
         $member->save();
         return response()->json(["msg"=>'New member created',"status"=>200],200);
         //
@@ -93,7 +94,24 @@ class MemberController extends Controller
     {
         //
     }
-
+ /**
+    * This function is used to Active Status update
+    *
+    * @param Request $request
+    * @return \Illuminate\View\View|\Illuminate\Routing\Redirector
+    * @author Caritas:kwizera
+    */
+   public function status(Request $request)
+   {
+       $id = $request->id;
+       $status = $request->status;
+       $member = Member::where('id',$id)->update(['status'=>$status]);
+       if($status == 1){
+       return response()->json(["msg"=>'Accepted',"status"=>200],200);
+       }else{
+       return response()->json(["msg"=>'Declined',"status"=>200],200);
+    }
+   }
     /**
      * Remove the specified resource from storage.
      */

@@ -4,17 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Category;
-
-class CategoryController extends Controller
+use App\Models\Support;
+use Illuminate\Support\Facades\Validator;
+class SupportController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Category::all();
-        return response()->json(["msg"=>'success',"data"=>$data,"status"=>200],200);
         //
     }
 
@@ -31,6 +29,25 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'reason' => 'required',
+            'amount' =>'required',
+        ]);
+         if ($validator->fails()) {
+            $data ['status'] = 401;
+            $data ['data'] = 'Validation Error.';
+            $data['success']= false;
+            $data ['message'] = $validator->errors()->all();
+            return response()->json($data);
+
+        }
+        $add = Support::create([
+            'reasons' =>$request->reason,
+            'member_id' => $request->member_id,
+            'user_id' => \Auth::user()->id,
+            'amount' => $request->amount,
+        ]);
+       return response()->json(['status' => 201,'message' => "new support provided"]);
         //
     }
 
