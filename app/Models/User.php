@@ -38,7 +38,7 @@ class User extends Authenticatable
         'created_by',
         'status'
     ];
-    
+
 
     // protected static $recordEvents = ['created','updated','deleted'];
     // Implement the missing abstract method
@@ -96,7 +96,7 @@ public function updateExistUser(array $data)
      */
     public static function createUser($info) {
 
-        $user= DB::table('users')->insertGetId([
+        $user= \DB::table('users')->insertGetId([
                                  'first_name'=>$info['first_name'],
                                  'last_name'=>$info['last_name'],
                                  'email'=>$info['email'],
