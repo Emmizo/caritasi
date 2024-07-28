@@ -47,6 +47,7 @@
                                             <th>ADDRESS</th>
                                             <th>REASONS</th>
                                             <th>DESCRIPTION</th>
+                                            <th>COMMUNITY NAME</th>
                                             <th>CREATED BY</th>
                                             <th>UPDATED AT</th>
 
@@ -165,6 +166,7 @@
                     "fnDrawCallback": function() {
                         $('.toggle-class').bootstrapToggle();
                     },
+
                     "columns": [{
                             data: 'id',
                             name: 'id'
@@ -197,6 +199,11 @@
                         {
                             data: 'description',
                             name: 'description'
+
+                        },
+                        {
+                        data: 'community_name',
+                        name: 'community_name'
 
                         },
                         {

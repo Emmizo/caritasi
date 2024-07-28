@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Member;
 use App\Models\Community;
 use App\Models\Center;
-
+use App\Models\Support;
 
 class DashboardController extends Controller
 {
@@ -18,12 +18,7 @@ class DashboardController extends Controller
     public function index()
     {
         $data['users'] = User::where('is_delete',0)->count();
-        $user = User::join('centers','centers.id','users.centrale_id')
-        ->join('communities','communities.center_id','centers.id')->select("users.*","communities.community_name","centers.center_name")->where(function ($user){
-            return (auth()->user()->role!=1 && auth()->user()->role !=5  ?
-                $user->where('users.community_id', auth()->user()->community_id) : auth()->user()->role==4)?$user->where('users.centrale_id', auth()->user()->centrale_id):"";
-        })->first();
-        $data['details'] =$user;
+
 
         $member = Member::join('categories','categories.id','members.cat_id')
         ->join('users','users.id','members.user_id')
@@ -46,6 +41,14 @@ class DashboardController extends Controller
         })->count();
 
         $data['centers'] = $centrale;
+        $support =  Support::join('members','members.id','supports.member_id')->join('categories','categories.id','members.cat_id')
+        ->join('users','users.id','members.user_id')
+        ->select('users.role','users.community_id','users.centrale_id','supports.id as support_id','supports.reasons','supports.status as statuses','supports.amount','users.first_name as user_first_name','users.last_name as user_last_name','categories.category_name','categories.description as cat_description','members.*')->orderBy('members.created_at', 'desc')
+        ->where(function ($member){
+            return (auth()->user()->role!=1 && auth()->user()->role !=5  ?
+                $member->where('users.community_id', auth()->user()->community_id) : auth()->user()->role==4)?$member->where('users.centrale_id', auth()->user()->centrale_id):"";
+        })->count();
+        $data['supports'] = $support;
         return view('dashboard',$data);
         //
     }

@@ -175,6 +175,7 @@ public function updateExistUser(array $data)
 
        $user= User::where('id', $info['id'])
                     ->update($data);
+                    
                     // Log the activity
         activity()
         ->performedOn(User::find($user))

@@ -58,7 +58,7 @@ class UserController extends Controller
 
                         ->addColumn('action', function($user){
                             $action = '<div class="action-btn"><a class="btn-success" title="Edit" href="'.route('manage-user-edit', $user->id) .'"><i class="fa fa-edit"></i></a>';
-                            $user->role == 1 ? " ": $action .='&nbsp;<span title="Delete" style="cursor:pointer" class=" delete-user btn-dark" data-id="'.$user->id.'" data-url="'.route('manage-user-delete', $user->id) .'"><i class="fa fa-trash"></i></span></div>';
+                            $user->role == auth()->user()->role || $user->role == 1 || $user->role == 5 ? " ": $action .='&nbsp;<span title="Delete" style="cursor:pointer" class=" delete-user btn-dark" data-id="'.$user->id.'" data-url="'.route('manage-user-delete', $user->id) .'"><i class="fa fa-trash"></i></span></div>';
 
                             return $action;
                         })
@@ -327,9 +327,9 @@ class UserController extends Controller
             $info['profile_pic'] = 'users_pic/'.$imageName;
         }
         $user = User::find($request->id);
-
+        $role = Role::findById($user->role);
         if (isset($request->role)) {
-            $user->syncRoles($request->role);
+            $user->syncRoles($role->name);
         } else {
             $user->syncRoles([]);
         }

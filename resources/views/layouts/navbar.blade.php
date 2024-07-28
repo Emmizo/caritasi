@@ -4,7 +4,29 @@
         <img src="{{ asset('assets/images/logo.png') }}" alt="" class="logo-img">
     </a> </div>
     <div class="center-digital">
-        <h2 style="font-size: 15px;"><b>{{ config('app.name') }}</b></h2>
+        <h2 style="font-size: 15px;">
+            <b> @if(Auth::user()->role == 5)
+                President of
+                @elseif(Auth::user()->role == 1)
+                Admin of
+                @endif
+                {{ config('app.name') }}
+                @if(Auth::user()->role == 1)
+                management System
+                @endif
+                @if(Auth::check())
+                @if(Auth::user()->centrale_id !== null )
+                @if(Auth::user()->role ==2 )
+                 and Community of {{ $data['details']->community_name }}
+                @elseif(Auth::user()->role==4)
+                  and Centrale {{ $data['details']->center_name }}
+
+                @endif
+                @endif
+                @endif
+
+            </b>
+        </h2>
     </div>
 
 

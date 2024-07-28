@@ -72,12 +72,13 @@
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="role">Role</label>
-                                            <select class="form-control" name="role" id="role">
-                                                <option value="">Role</option>
+                                            <select class="form-control" name="role" id="role2">
+                                                <option value="">Roles</option>
                                                 @foreach ($roles as $key => $role)
-                                                    <?php $selected = $role->name == $info->role ? 'selected' : ''; ?>
-                                                    <option value="{{ $role->name }}"<?= $selected ?>>
-                                                        {{ $role->name }}</option>
+
+                                                <?php $selected = $role->id == $info->role ? 'selected' : ''; ?>
+                                                <option value="{{ $role->id }}" <?=$selected ?>>
+                                                    {{ $role->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

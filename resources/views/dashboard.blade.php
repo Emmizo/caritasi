@@ -6,9 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-4">
                 <div class="col-sm-12 justify-content-center dashboard m-5">
-                    <h1> Welcome {{ $details->first_name . '  ' . $details->last_name . ' ' }}to
-                        Centrale of {{ $details->center_name }} in Community of {{ $details->community_name }}
-                    </h1>
+
                 </div>
 
                 <div class="row d-flex justify-content-center">
@@ -119,17 +117,17 @@
 
         <div class="inner">
             <h3 class="d-flex justify-content-center">
-                {{ $members }}
+                {{ $supports }}
             </h3>
             <p class="d-flex justify-content-center">
-                Manage Members
+                Manage Supports
             </p>
         </div>
 
         <div class="icon">
             <i class="ion ion-bag"></i>
         </div>
-        <a href="{{ route('manage-members') }}" class="small-box-footer">
+        <a href="{{ route('manage-support') }}" class="small-box-footer">
             More info <i class="fa fa-arrow-circle-right"></i>
         </a>
     </div>

@@ -7,13 +7,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <script>
         var siteUrl = "{{ url('/') }}";
         var csrf_token = "{{ csrf_token() }}";
-    </script> 
-    <title>{{ (isset($title)) ? $title.' - ' : '' }} {{ config('app.name', 'EECO') }}</title>
-    
+    </script>
+    <title>{{ (isset($title)) ? $title.' - ' : '' }} {{ config('app.name', 'Parish') }}</title>
+
     @include('layouts.header')
     <style type="text/css">
     	.invalid-feedback{

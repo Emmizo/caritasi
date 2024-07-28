@@ -12,6 +12,7 @@
     <script>
         var siteUrl = "{{ url('/') }}";
         var csrf_token = "{{ csrf_token() }}";
+
     </script>
     <title>{{ isset($title) ? $title . ' - ' : '' }} {{ config('app.name') }}</title>
     {{-- <link rel="shortcut icon" href="https://excellenceindustries.com/wp-content/uploads/2018/10/favicon.ico" type="image/x-icon" /> --}}
