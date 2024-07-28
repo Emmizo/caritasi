@@ -65,7 +65,7 @@ class AuthController extends Controller
         {
             return response(['errors'=>$validator->errors()->all()], 422);
         }
-        $Authorized = User::where('email', $request->email)->first();
+        $Authorized = User::where('email', $request->email)->where('status',1)->first();
         $user = User::where('email', $request->email)->first();
         if(!$user){
             activity()
@@ -106,16 +106,16 @@ return response($response, 401);
                       ->event("Login")
                       ->log('some one add wrong password');
             $response = ["message" => "Password mismatch",'success' => false,"status"=>401];
-            return response($response, 401);
+            return response([$response]);
         }
     } else {
 
         activity()
 
         ->event("Login ")
-        ->log('Some one who doesn\'t exist want to log in');
+        ->log('someone who doesn \'t allowed to access trying to access account');
         $response = ["message" =>'Your not allowed to access','success' => false,"status"=>401];
-        return response($response, 401);
+        return response([$response, 401]);
     }}
         //
     }

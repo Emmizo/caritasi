@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Member extends Model
 {
     use HasFactory;
     protected $fillable =[
-
         'user_id',
         'cat_id',
         'first_name',
@@ -42,7 +43,7 @@ class Member extends Model
     */
    public function updateStatus($id,$status) {
        $model = $this->where('id', $id)->update(['status'=>$status]);
-       if($status == 0){
+       if($status == 1){
         activity()
         ->performedOn(Member::find($id))
        ->withProperties(['info' => Member::find($id)])
@@ -51,7 +52,7 @@ class Member extends Model
         }else{
             activity()
             ->performedOn(Member::find($id))
-           ->withProperties( Member::find($id))
+           ->withProperties(['info' => Member::find($id)])
            ->event("status changed")
         ->log('Member Status Diactivated');
         }

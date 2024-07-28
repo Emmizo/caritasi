@@ -10,8 +10,8 @@ use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
-use DB;
-
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles,LogsActivity;
@@ -38,6 +38,7 @@ class User extends Authenticatable
         'created_by',
         'status'
     ];
+    
 
     // protected static $recordEvents = ['created','updated','deleted'];
     // Implement the missing abstract method

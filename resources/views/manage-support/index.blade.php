@@ -284,95 +284,98 @@
                     });
                 });
             });
-            //activate or inactive user
-            $(document).on('change', '.toggle-class', function() {
-                var id = $(this).attr('data-id');
-                var status_url = $(this).attr('data-url');
-                // alert($(this).is(":checked"));
-                if ($(this).is(":checked")) {
-                    var status = 1;
-                    var statusname = "Approval";
-                } else  {
-                    var status = 0;
-                    var statusname = "Reject";
-                }
-                swal({
-                    title: 'Are you sure want to ' + statusname + '?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#E1261C',
-                    cancelButtonColor: '#EBEBEB',
-                    confirmButtonText: 'Yes',
-                    cancelButtonText: 'No',
-                    confirmButtonClass: 'btn',
-                    cancelButtonClass: 'btn',
-                }).then(function(result) {
-                    console.log(result.dismiss);
-                    if (result.value==true) {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            type: "POST",
-                            dataType: 'json',
-                            url: status_url,
-                            data: {
-                                id: id,
-                                status: 1
-                            },
-                            beforeSend: function() {
-                                $('.loader1').show();
-                            },
-                            success: function(data) {
-                                $('.loader1').hide();
-                                if (data) {
-                                    swal({
-                                        title: "Success",
-                                        text: "Request approved.",
-                                        type: "success",
-                                        confirmButtonColor: '#E1261C',
-                                    });
-                                    $('#manage-users').DataTable().draw();
-                                }
-                            }
-                        });
-                    } else if(result.dismiss=="cancel") {
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
-                        $.ajax({
-                            type: "POST",
-                            dataType: 'json',
-                            url: status_url,
-                            data: {
-                                id: id,
-                                status: 2
-                            },
-                            beforeSend: function() {
-                                $('.loader1').show();
-                            },
-                            success: function(data) {
-                                $('.loader1').hide();
-                                if (data) {
-                                    swal({
-                                        title: "Fail",
-                                        text: "This personal rejected.",
-                                        type: "success",
-                                        confirmButtonColor: '#E1261C',
-                                    });
-                                    $('#manage-users').DataTable().draw();
-                                }
-                            }
-                        });
-                        // $("#manage-users").DataTable().draw();
-                    }
-                });
+           //activate or inactive user
+    $(document).on('change', '.toggle-class', function() {
+        var id = $(this).attr('data-id');
+        var status_url = $(this).attr('data-url');
+        var $this = $(this);
+// console.log($(this).is(":checked"))
+        if ($(this).is(":checked")) {
+        var status = 1;
+        var statusname = "Approval";
+        } else {
+        var status = 0;
+        var statusname = "Reject";
+        }
+        swal({
+        title: 'Are you sure want to ' + statusname + '?',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#E1261C',
+        cancelButtonColor: '#EBEBEB',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        confirmButtonClass: 'btn',
+        cancelButtonClass: 'btn',
+        }).then(function(result) {
+// console.log(result.dismiss)
+        if (result.value==true) {
 
-            });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+             }
+        });
+            $.ajax({
+                type: "POST",
+                dataType: 'json',
+                url: status_url,
+                data: {
+                id: id,
+                status: 1
+        },
+        beforeSend: function() {
+            $('.loader1').show();
+        },
+        success: function(data) {
+            $('.loader1').hide();
+
+        if (data) {
+        swal({
+            title: "Success",
+            text: "Request approved.",
+            type: "success",
+            confirmButtonColor: '#E1261C',
+        });
+        $('#manage-users').DataTable().draw();
+        }
+        }
+        });
+        } else if(result.dismiss=="cancel") {
+        $.ajaxSetup({
+        headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        }
+        });
+        $.ajax({
+        type: "POST",
+        dataType: 'json',
+        url: status_url,
+        data: {
+        id: id,
+        status: 2
+        },
+        beforeSend: function() {
+        $('.loader1').show();
+        },
+        success: function(data) {
+        $('.loader1').hide();
+        if (data) {
+        swal({
+        title: "Fail",
+        text: "This personal rejected.",
+        type: "success",
+        confirmButtonColor: '#E1261C',
+        });
+        $('#manage-users').DataTable().draw();
+        }
+        }
+        });
+        // $("#manage-users").DataTable().draw();
+        }
+        });
+
+        });
             $(document).on('click', '.view-category', function() {
                 var name = $(this).attr('data-id-description');
                 var title = $(this).attr('data-cat');

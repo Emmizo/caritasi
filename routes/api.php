@@ -7,6 +7,7 @@ use App\Http\Controllers\API\MemberController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\SupportController;
+use App\Http\Controllers\API\UserController;
 
 #open API
 Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
@@ -24,6 +25,7 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api']
     Route::post('/logout-api', [AuthController::class, 'destroy'])->name('logout-api');
     Route::get('/user-detail',[AuthController::class,'index'])->name('user-detail');
     Route::post('/update-profile',[AuthController::class, 'update'])->name('update-profile');
+    Route::get('list-user',[UserController::class,'index']);
 
 });
 
@@ -42,4 +44,9 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api']
     Route::get('dashboard',[DashboardController::class,'index']);
     Route::post('add-support',[SupportController::class,'store']);
 
+});
+#Support
+Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api'], function () {
+    Route::get('/list-support',[SupportController::class,'index']);
+    Route::post('/status'    , [SupportController::class,'status']);
 });

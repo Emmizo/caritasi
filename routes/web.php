@@ -118,7 +118,5 @@ Route::group(['prefix' => '/support', 'middleware' => ['auth','nocache','can:Man
     Route::post('/save-support', 'SupportController@store')->name('manage-support-save');
     Route::post('/update-support', 'SupportController@update')->name('manage-support-update');
     Route::get('/support', 'SupportController@index')->name('manage-support');
-
-}
-)
-;
+    Route::post('/status'    , 'SupportController@status')->name('manage-support-status');
+});

@@ -29,7 +29,7 @@ class SupportController extends Controller
 
         $member = Support::join('members','members.id','supports.member_id')->join('categories','categories.id','members.cat_id')
         ->join('users','users.id','members.user_id')
-        ->select('users.role','supports.id as support_id','supports.reasons','supports.status as statuses','supports.amount','users.first_name as user_first_name','users.last_name as user_last_name','categories.category_name','categories.description as cat_description','members.*')->orderBy('members.created_at', 'desc')
+        ->select('users.role','users.community_id','users.centrale_id','supports.id as support_id','supports.reasons','supports.status as statuses','supports.amount','users.first_name as user_first_name','users.last_name as user_last_name','categories.category_name','categories.description as cat_description','members.*')->orderBy('members.created_at', 'desc')
         ->orderBy(function($member){
             $member->selectRaw('CASE
             WHEN members.status = 1 THEN 0
@@ -55,7 +55,8 @@ class SupportController extends Controller
         })
         ->editColumn('status', function($member){
             $status = ($member->statuses == 1) ? 'checked' : '';
-            return '<input class="toggle-class" type="checkbox" data-id="'.$member->id.'" '.$status.'  data-toggle="toggle" data-on="Paid" data-off="'.($member->statuses == 0 ?'Wait':'Rejected').'" data-onstyle="success" data-offstyle="'.($member->statuses == 0 ? 'default' : 'danger').'" data-url="'.route('manage-members-status') .'">';
+            $disabled = ( $member->statuses == 1)? 'disabled' :(($member->statuses ==2)?'disabled' : ((auth()->user()->role==2 || auth()->user()->role==1  && $member->statuses ==0)? 'disabled' : ''));
+            return '<input class="toggle-class" type="checkbox" data-id="'.$member->support_id.'" '.$status.'  data-toggle="toggle" data-on="Paid" data-off="'.($member->statuses == 0 ?'Wait':'Rejected').'" data-onstyle="success" data-offstyle="'.($member->statuses == 0 ? 'default' : 'danger').'" data-url="'.route('manage-support-status') .'"' . $disabled . '>';
         })
         ->editColumn('description',function($member){
             return '<button type="button" class="btn btn-primary view-category" data-toggle="modal" data-cat="'.$member->first_name.' '.$member->last_name.'" data-id-description="'.$member->reasons.'" data-target="#exampleModal">
@@ -118,7 +119,16 @@ class SupportController extends Controller
        return response()->json(['status' => 201,'message' => "new support provided"]);
         //
     }
-
+public function status(Request $request)
+   {
+       $id = $request->id;
+       $status = $request->status;
+    //    return "id:".$id." status:".$status;
+       if($id)
+           return (new Support)->updateStatuses($id,$status);
+       else
+           return false;
+   }
     /**
      * Remove the specified resource from storage.
      */

@@ -287,7 +287,9 @@
             $(document).on('change', '.toggle-class', function() {
                 var id = $(this).attr('data-id');
                 var status_url = $(this).attr('data-url');
-                // alert($(this).is(":checked"));
+                var $this = $(this);
+                $this.prop('disabled', true);
+
                 if ($(this).is(":checked")) {
                     var status = 1;
                     var statusname = "Approval";
@@ -306,7 +308,7 @@
                     confirmButtonClass: 'btn',
                     cancelButtonClass: 'btn',
                 }).then(function(result) {
-                    console.log(result.dismiss);
+
                     if (result.value==true) {
                         $.ajaxSetup({
                             headers: {
@@ -326,6 +328,7 @@
                             },
                             success: function(data) {
                                 $('.loader1').hide();
+                                console.log(data)
                                 if (data) {
                                     swal({
                                         title: "Success",
