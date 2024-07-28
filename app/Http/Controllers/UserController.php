@@ -47,6 +47,9 @@ class UserController extends Controller
          ->where(function ($query) use ($request) {
                 return $request->role!="" ?
                     $query->where('users.role', $request->role) : '';
+            })->where(function ($user)  {
+                return (\Auth::user()->role!=1 && \Auth::user()->role !=5  ?
+            $user->where('users.community_id', \Auth::user()->community_id) : \Auth::user()->role==4)?$user->where('users.centrale_id', auth()->user()->centrale_id):"";
             })
             ->where('users.is_delete',0)->get();
 
