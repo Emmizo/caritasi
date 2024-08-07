@@ -74,7 +74,9 @@ class UserController extends Controller
                         })
                         ->editColumn('status', function($user){
                             $status = ($user->status == 1) ? 'checked' : '';
-                            return '<input class="toggle-class" type="checkbox" data-id="'.$user->id.'" '.$status.'  data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="success" data-offstyle="danger" data-url="'.route('manage-user-status') .'">';
+                             $disabled = $user->role == auth()->user()->role? 'disabled':'';
+                             $dataOnStyle = $user->role == auth()->user()->role ? 'default' : 'success';
+                            return '<input class="toggle-class" type="checkbox" data-id="'.$user->id.'" '.$status.'  data-toggle="toggle" data-on="Active" data-off="Inactive" data-onstyle="'. $dataOnStyle.'" data-offstyle="danger" data-url="'.route('manage-user-status') .'"' . $disabled . '>';
                         })
                         ->editColumn('first_name', function($user){
                             return $user->first_name;

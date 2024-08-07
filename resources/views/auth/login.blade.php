@@ -26,7 +26,7 @@
                     <div class="col-md-6 col-sm-6 col-xs-12">
                         <div class="login">
                             <h4>Welcome Back!</h4>
-                            <p class="f-16">NYUNDO PARISH</p>
+                            <p class="f-16 custom-text-capitalize">Caritas Community Care Hub</p>
                             @if (session()->has('success'))
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {!! session('success') !!}

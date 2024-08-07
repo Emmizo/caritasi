@@ -34,7 +34,7 @@
                                 <div class="form-group">
                                     <label for="role">Centrale<span class="text-danger">*</span></label>
                                     <select class="form-control" name="center_id" id="center_id">
-                                        <option value="">Centrale</option>
+                                        {{-- <option value="">Centrale</option> --}}
                                         @foreach ($centrales as $key => $centrale)
                                             <option value="{{ $centrale->id }}">{{ $centrale->center_name }}</option>
                                         @endforeach

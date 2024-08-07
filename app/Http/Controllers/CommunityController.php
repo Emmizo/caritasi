@@ -64,7 +64,11 @@ class CommunityController extends Controller
     {
         $data['title'] = "Manage community - Add";
         $data['brVal'] = "Manage community";
-        $data['centrales'] = Center::all();
+        $center = Center::where(function ($center)  {
+                return auth()->user()->centrale_id ?
+                    $center->where('centers.id', auth()->user()->centrale_id) : '';
+            })->get();
+            $data['centrales']=$center;
         return view('basic-ecclessial-community.add', $data);
         //
     }

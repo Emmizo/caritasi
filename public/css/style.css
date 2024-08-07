@@ -24,6 +24,9 @@
 .other-support.active {
     display: block;
 }
+.custom-text-capitalize {
+    text-transform: uppercase;
+}
 /* Marker Edit form */
 .marker-edit label {
     display: block;
