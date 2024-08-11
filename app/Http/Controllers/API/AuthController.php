@@ -194,7 +194,7 @@ return response($response, 401);
         {
             $data ['status'] = 401;
             $data ['data'] = "";
-            $data ['message'] = "Email is not exist in database.";
+            $data ['message'] = "Email is not exist.";
         }else{
         $response = event(new ResetPasswordEvent($email));
            if($response) {

@@ -28,7 +28,7 @@
                         <!-- /.card-header -->
                         <div class="card-body table-responsive">
                             <div class="row">
-                                @if(Auth::user()->role!=1)
+                                @if(Auth::user()->role==2)
                                 <div class="col-md-8 mb-3">
 
                                     <a href="{{ route('add-members') }}" class="btn btn-success">
