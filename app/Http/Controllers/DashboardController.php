@@ -23,9 +23,23 @@ class DashboardController extends Controller
         $member = Member::join('categories','categories.id','members.cat_id')
         ->join('users','users.id','members.user_id')
         ->select('users.role','users.first_name as user_first_name','users.last_name as user_last_name','categories.category_name','categories.description as cat_description','members.*')->orderBy('members.updated_at','desc')
-        ->where(function ($member){
-            return (auth()->user()->role!=1 && auth()->user()->role !=5  ?
-                $member->where('users.community_id', auth()->user()->community_id) : auth()->user()->role==4)?$member->where('users.centrale_id', auth()->user()->centrale_id):"";
+        ->where(function ($query) {
+            $userRole = auth()->user()->role;
+            $userCommunityId = auth()->user()->community_id;
+            $userCentraleId = auth()->user()->centrale_id;
+
+            if ($userRole != 1 && $userRole != 5) {
+                if ($userRole == 2) {
+                    $query->where('users.community_id', $userCommunityId);
+                } elseif ($userRole == 4 && $userRole == 3) {
+                    $query->where('users.centrale_id', $userCentraleId);
+                }
+            }
+        })
+        ->where(function($query) {
+            if (auth()->user()->role == 5) {
+                $query->where('members.status', 1);
+            }
         })->count();
         $data['members'] = $member;
 

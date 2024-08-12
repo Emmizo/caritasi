@@ -27,6 +27,16 @@
 .custom-text-capitalize {
     text-transform: uppercase;
 }
+/* Map tooltip */
+.box
+{
+  border: 1px solid green;
+  position:absolute;
+  color: white;
+  top: 19px;
+  left: 30px;
+  background-color: black;
+}
 /* Marker Edit form */
 .marker-edit label {
     display: block;

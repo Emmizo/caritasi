@@ -47,6 +47,7 @@
                                             <th>ADDRESS</th>
                                             <th>REASONS</th>
                                             <th>DESCRIPTION</th>
+                                            <th>CENTRALE NAME</th>
                                             <th>COMMUNITY NAME</th>
                                             <th>CREATED BY</th>
                                             <th>UPDATED AT</th>
@@ -199,6 +200,11 @@
                         {
                             data: 'description',
                             name: 'description'
+
+                        },
+                        {
+                        data: 'center_name',
+                        name: 'center_name'
 
                         },
                         {
@@ -475,8 +481,22 @@ console.log(member_id);
         return false;
     }
 });
-
+$( "a.detect-tooltip" ).hover(
+function() {
+console.log('Hover In');
+var title = $(this).attr("data-title");
+console.log('Title:', title);
+$('<div/>', {
+text: title,
+class: 'box'
+}).appendTo(this);
+}, function() {
+console.log('Hover Out');
+$(document).find("div.box").remove();
+}
+);
 
         });
+
         </script>
     @endsection

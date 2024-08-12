@@ -42,16 +42,39 @@ class UserController extends Controller
 
         $role = $request->role;
 
-         $user = User::leftjoin('centers','centers.id','users.centrale_id')->leftjoin('communities','communities.id','users.community_id')
-->select('users.*','centers.center_name','communities.community_name')
-         ->where(function ($query) use ($request) {
-                return $request->role!="" ?
-                    $query->where('users.role', $request->role) : '';
-            })->where(function ($user)  {
-                return (\Auth::user()->role!=1 && \Auth::user()->role !=5  ?
-            $user->where('users.community_id', \Auth::user()->community_id) : \Auth::user()->role==4)?$user->where('users.centrale_id', auth()->user()->centrale_id):"";
-            })
-            ->where('users.is_delete',0)->get();
+         $user = User::leftJoin('centers', 'centers.id', '=', 'users.centrale_id')
+    ->leftJoin('communities', 'communities.id', '=', 'users.community_id')
+    ->select('users.*', 'centers.center_name', 'communities.community_name')
+    ->where(function ($query) use ($request) {
+        if ($request->role != "") {
+            $query->where('users.role', $request->role);
+        }
+    })
+    ->where(function ($query) {
+        $authRole = \Auth::user()->role;
+        $authCommunityId = \Auth::user()->community_id;
+        $authCentraleId = \Auth::user()->centrale_id;
+
+        if ($authRole == 4) {
+            // Role 4 can view users with roles 2 and 3
+            $query->whereIn('users.role', [2, 3,4])
+             ->where('users.centrale_id', $authCentraleId);
+        } elseif ($authRole == 5) {
+            // Role 5 can view users with roles 4, 3, and 2
+            $query->whereIn('users.role', [2, 3, 4,5])
+             ->where('users.centrale_id', $authCentraleId);
+        } elseif ($authRole == 6 && $authRole == 1) {
+            // Roles 6 and 1 can view users with roles 5, 4, 3, and 2
+            $query->whereIn('users.role', [1,2, 3, 4, 5,6])
+             ->where('users.centrale_id', $authCentraleId);
+        }elseif($authRole == 3){
+$query->whereIn('users.role', [2, 3])
+             ->where('users.centrale_id', $authCentraleId);
+        }
+    })
+    ->where('users.is_delete', 0)
+    ->get();
+
 
 
         return datatables()->of($user)

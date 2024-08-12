@@ -21,33 +21,55 @@ class MemberController extends Controller
 
     public function getMemberListAjax(Request $request){
 
-       $members = Member::join('categories', 'categories.id', '=', 'members.cat_id')
-    ->join('users', 'users.id', '=', 'members.user_id')
-    ->join('communities', 'communities.id', '=', 'users.community_id')
-    ->select('users.role', 'users.first_name as user_first_name','communities.community_name', 'users.last_name as user_last_name', 'categories.category_name', 'categories.description as cat_description', 'members.*')
-    ->orderBy('members.created_at', 'desc')
-    ->orderBy(function($query) {
-        $query->selectRaw('CASE
-            WHEN members.status = 1 THEN 1
-            WHEN members.status = 0 THEN 1
-            WHEN members.status = 2 THEN 2
-            ELSE 3
-        END');
-    })
-    ->where(function ($query) {
-        if (auth()->user()->role != 1 && auth()->user()->role != 5) {
-            return auth()->user()->role == 4
-                ? $query->where('users.centrale_id', auth()->user()->centrale_id)
-                : $query->where('users.community_id', auth()->user()->community_id);
-        }
-    })->where(function($member){
-            return auth()->user()->role == 5 ?$member->where('members.status',1): "";
+     $members = Member::join('categories', 'categories.id', '=', 'members.cat_id')
+        ->join('users', 'users.id', '=', 'members.user_id')
+        ->join('communities', 'communities.id', '=', 'users.community_id')
+        ->join('centers','centers.id','=','communities.center_id')
+        ->select(
+            'users.role',
+            'users.first_name as user_first_name',
+            'communities.community_name',
+            'users.last_name as user_last_name',
+            'categories.category_name',
+            'categories.description as cat_description',
+            'centers.center_name',
+            'members.*'
+        )
+        ->orderBy('members.created_at', 'desc')
+        ->orderBy(function($query) {
+            $query->selectRaw('CASE
+                WHEN members.status = 1 THEN 1
+                WHEN members.status = 0 THEN 1
+                WHEN members.status = 2 THEN 2
+                ELSE 3
+            END');
         })
-    ->get();
+        ->where(function ($query) {
+            $userRole = auth()->user()->role;
+            $userCommunityId = auth()->user()->community_id;
+            $userCentraleId = auth()->user()->centrale_id;
+
+            if ($userRole != 1 && $userRole != 5) {
+                if ($userRole == 2) {
+                    $query->where('users.community_id', $userCommunityId);
+                } elseif ($userRole == 4 && $userRole == 3) {
+                    $query->where('users.centrale_id', $userCentraleId);
+                }
+            }
+        })
+        ->where(function($query) {
+            if (auth()->user()->role == 5) {
+                $query->where('members.status', 1);
+            }
+        })
+        ->get();
 
 return datatables()->of($members)
     ->addColumn('action', function($member) {
-        $action = '<div class="action-btn"><a class="btn-success " title="Edit" href="' . route('manage-members-edit', $member->id) . '"><i class="fa fa-edit"></i></a>';
+        $editableColor =$member->status == 0 ?'btn-success':'btn-warning';
+        $disableEdit = $member->status == 0?route('manage-members-edit', $member->id) :'#';
+        $tooltip = $member->status == 0?"Not have access": "Edit";
+        $action = '<div class="action-btn"><a class="'.$editableColor.'" id="detect-tooltip" data-title="'.$tooltip.'" href="' . $disableEdit . '"><i class="fa fa-edit"></i></a>';
         if  ((auth()->user()->role == 5 && $member->status == 1) || (auth()->user()->role == 3 && $member->status == 1) ){
             $action .= '&nbsp;<span title="Add support" style="cursor:pointer" class=" btn-warning add-support" data-target="#exampleModal2" data-id="' . $member->id . '" data-toggle="modal" data-member-id="' . $member->id . '" data-name="' . $member->first_name . ' ' . $member->last_name . '"><i class="fa fa-plus"></i></span></div>';
         }

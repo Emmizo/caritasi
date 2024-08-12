@@ -4,22 +4,34 @@
         <img src="{{ asset('assets/images/logo.png') }}" alt="" class="logo-img">
     </a> </div>
     <div class="center-digital">
-        <h2 style="font-size: 15px;">
+        <h2 style="font-size: 15px;" class="text-uppercase">
+
             <b> @if(Auth::user()->role == 5)
-                President of
+                President of Parish
                 @elseif(Auth::user()->role == 1)
                 Admin of
+                @elseif(Auth::user()->role == 3)
+                President of Diocesse
+                @elseif(Auth::user()->role == 2)
+                Community chief
+                @elseif(Auth::user()->role == 6)
+                Father
+                @elseif(Auth::user()->role == 4)
+                President of Centrale
                 @endif
+                {{-- @endif
+                @endif
+                @endif
+                @endif --}}
+                Welcome to
                 {{ config('app.name') }}
-                @if(Auth::user()->role == 1)
-                management System
-                @endif
+
                 @if(Auth::check())
                 @if(Auth::user()->centrale_id !== null )
                 @if(Auth::user()->role ==2 )
-                 and Community of {{ $data['details']->community_name }}
-                @elseif(Auth::user()->role==4)
-                  and Centrale {{ $data['details']->center_name }}
+                 in Community of {{ $data['details']->community_name }}
+                @else
+                  in Centrale {{ $data['details']->center_name }}
 
                 @endif
                 @endif

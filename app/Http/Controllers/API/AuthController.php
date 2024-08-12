@@ -71,8 +71,8 @@ class AuthController extends Controller
             activity()
             ->event("Login ")
             ->log('Some one who doesn\'t exist want to log in');
-$response = ["message" =>'User does not exist','success' => false];
-return response($response, 401);
+$response = ["message" =>'User does not exist','status'=>404,'success' => false];
+return response([$response, 404]);
         }else{
     if ($Authorized) {
         if (Hash::check($request->password, $user->password)) {

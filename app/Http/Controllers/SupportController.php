@@ -44,9 +44,10 @@ class SupportController extends Controller
         })->get();
         return datatables()->of($member)
         ->addColumn('action', function($member){
-            // '<div class="action-btn"><a class="btn-success " title="Edit" href="'.route('manage-members-edit', $member->id) .'"><i class="fa fa-edit"></i></a>'
+             $editableColor =(auth()->user()-> role == 1?"": auth()->user()-> role == 4 && $member->statuses == 0|| auth()->user()-> role == 5 && $member->statuses == 0|| auth()->user()-> role == 3 && $member->statuses == 0)?'btn-success':'btn-warning';
             $action = "";
-            (auth()->user()-> role == 1?"": auth()->user()-> role == 4 && $member->statuses == 0|| auth()->user()-> role == 5 && $member->statuses == 0|| auth()->user()-> role == 3 && $member->statuses == 0)?  $action .= '&nbsp;<span title="Add support" style="cursor:pointer" class=" btn-success add-support" data-target="#exampleModal2" data-id="'.$member->id.'" data-reason="'.$member->reasons.'" data-amount="'.$member->amount.'" data-toggle="modal" data-support-id="'.$member->support_id.'" data-name="'.$member->first_name.' '.$member->last_name.'";><i class="fa fa-edit" ></i></span></div>':"";
+           $disableEdit = (auth()->user()-> role == 1?"": auth()->user()-> role == 4 && $member->statuses == 0|| auth()->user()-> role == 5 && $member->statuses == 0|| auth()->user()-> role == 3 && $member->statuses == 0)? 'modal':'disable-modal';
+              $action .= '&nbsp;<span title="Edit support" style="cursor:pointer" class="'.$editableColor.' add-support" data-target="#exampleModal2" data-id="'.$member->id.'" data-reason="'.$member->reasons.'" data-amount="'.$member->amount.'" data-toggle="'.$disableEdit.'" data-support-id="'.$member->support_id.'" data-name="'.$member->first_name.' '.$member->last_name.'";><i class="fa fa-edit" ></i></span></div>';
 
             return $action;
         })
