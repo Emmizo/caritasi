@@ -19,8 +19,10 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     public function index(Request $request){
-          $user = User::leftjoin('centers','centers.id','users.centrale_id')->leftjoin('communities','communities.id','users.community_id')
-->select('users.*','centers.center_name','communities.community_name')
+          $user = User::leftjoin('centers','centers.id','users.centrale_id')
+          ->leftjoin('communities','communities.id','users.community_id')
+          ->join('roles','roles.id','users.role')
+->select('users.*','centers.center_name','communities.community_name','roles.name as role_name')
          ->where(function ($user)  {
                 return (\Auth::user()->role!=1 && \Auth::user()->role !=5  ?
             $user->where('users.community_id', \Auth::user()->community_id) : \Auth::user()->role==4)?$user->where('users.centrale_id', auth()->user()->centrale_id):"";

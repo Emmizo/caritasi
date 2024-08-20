@@ -77,7 +77,7 @@
         </div>
         <div class="modal-body">
           <div id="desc"></div>
-        <form id="textGenerationForm" method="POST" action="{{ url('/api/generate-text') }}">
+        <form id="textGenerationForm" method="POST" action="{{ url('/api/v1/generate-text') }}">
             @csrf
             <div>
 
@@ -525,7 +525,7 @@ document.getElementById('title-ai').style.display = 'none';
 const prompt = document.getElementById('prompt').value;
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-fetch('{{ url('/api/generate-text') }}', {
+fetch('{{ url('/api/v1/generate-text') }}', {
 method: 'POST',
 headers: {
 'Content-Type': 'application/json',

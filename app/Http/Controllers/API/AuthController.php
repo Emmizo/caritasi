@@ -26,6 +26,7 @@ class AuthController extends Controller
 
 
       $user = User::join('roles','roles.id','users.role')->select('users.*','roles.name')->where('users.id',auth()->user()->id)->first();
+      $domain = config('app.url');
       $response = [
         'user' => [
             "id"=> $user->id,
@@ -37,7 +38,7 @@ class AuthController extends Controller
             "status" => $user->status,
             "is_deleted" => $user->is_delete,
             ],
-
+'base_url' => $domain,
         'success' => true,
     ];
     activity()
