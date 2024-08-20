@@ -77,6 +77,19 @@
         </div>
         <div class="modal-body">
           <div id="desc"></div>
+        <form id="textGenerationForm" method="POST" action="{{ url('/api/generate-text') }}">
+            @csrf
+            <div>
+
+                <input type="hidden" id="prompt" name="prompt" required>
+            </div>
+            <button type="submit">Generate Text</button>
+
+        </form>
+
+        <h2 id="title-ai">Suggestion from AI:</h2>
+        <p id="generatedText"></p>
+        <div id="loadingSpinner"></div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -393,7 +406,11 @@
                 var title = $(this).attr('data-cat');
 
                 $('#desc').html(name);
+                $('#prompt').val(name);
+                $('#generatedText').text('');
+
                 $("#exampleModalLabel").html(title)
+                document.getElementById('title-ai').style.display = 'none';
 
 
             });
@@ -497,6 +514,41 @@ $(document).find("div.box").remove();
 );
 
         });
+document.getElementById('textGenerationForm').addEventListener('submit', function(event) {
+event.preventDefault();
 
+// Show loading spinner
+document.getElementById('loadingSpinner').style.display = 'inline-block';
+//hide title
+document.getElementById('title-ai').style.display = 'none';
+
+const prompt = document.getElementById('prompt').value;
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+fetch('{{ url('/api/generate-text') }}', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'X-CSRF-TOKEN': csrfToken
+},
+body: JSON.stringify({ prompt: prompt })
+})
+.then(response => response.json())
+.then(data => {
+// Hide loading spinner
+document.getElementById('loadingSpinner').style.display = 'none';
+
+//show title
+document.getElementById('title-ai').style.display = 'inline-block';
+
+document.getElementById('generatedText').innerText = data.generated_text;
+})
+.catch(error => {
+// Hide loading spinner
+document.getElementById('loadingSpinner').style.display = 'none';
+
+console.error('Error:', error);
+});
+});
         </script>
     @endsection

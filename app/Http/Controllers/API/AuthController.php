@@ -25,15 +25,15 @@ class AuthController extends Controller
 
 
 
-      $user = User::where('id',auth()->user()->id)->first();
+      $user = User::join('roles','roles.id','users.role')->select('users.*','roles.name')->where('users.id',auth()->user()->id)->first();
       $response = [
         'user' => [
             "id"=> $user->id,
             "first_name" => $user->first_name." ".$user->last_name,
-
             "email" =>$user->email,
             "profile_picture" => $user->profile_picture,
             "role" => $user->role,
+            "role_name" => $user->name,
             "status" => $user->status,
             "is_deleted" => $user->is_delete,
             ],
@@ -66,7 +66,7 @@ class AuthController extends Controller
             return response(['errors'=>$validator->errors()->all()], 422);
         }
         $Authorized = User::where('email', $request->email)->where('status',1)->first();
-        $user = User::where('email', $request->email)->first();
+        $user = User::join('roles','roles.id','users.role')->select('users.*','roles.name')->where('email', $request->email)->first();
         if(!$user){
             activity()
             ->event("Login ")
@@ -86,6 +86,7 @@ return response([$response, 404]);
                     "email" =>$user->email,
                     "profile_picture" => $user->profile_picture,
                     "role" => $user->role,
+                    "role_name" => $user->name,
                     "status" => $user->status,
                     "is_deleted" => $user->is_delete,
                     ],

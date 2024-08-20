@@ -8,6 +8,10 @@ use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\SupportController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\TextGenerationController;
+
+
+
 
 #open API
 Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
@@ -50,3 +54,5 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api']
     Route::get('/list-support',[SupportController::class,'index']);
     Route::post('/status'    , [SupportController::class,'status']);
 });
+#this route will help to reach on openAI
+Route::post('/generate-text', [TextGenerationController::class, 'generateText']);

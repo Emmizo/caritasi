@@ -11,7 +11,35 @@ body {
 ::after {
     box-sizing: border-box;
 }
+/* Simple loading spinner styles */
+        #loadingSpinner {
+            display: none;
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
 
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #title-ai{
+            display:none;
+        }
+        /* Map tooltip */
+.box
+{
+  border: 1px solid green;
+  position:absolute;
+  color: white;
+  top: 19px;
+  left: 30px;
+  background-color: black;
+}
 .breadcrumb-item+.breadcrumb-item::before {
     float: left;
     padding-right: 5px;
@@ -60,7 +88,7 @@ a {
     padding:0.5em;
     font-family: Arial, Helvetica, sans-serif;
     font-size: small;
-    
+
 }
 .header {
     width: 100%;
@@ -75,7 +103,7 @@ a {
     z-index: 100;
     transition: .5s;
     padding-right: 20px;
-	
+
 }
 
 .content-wrapper{
@@ -87,11 +115,11 @@ a {
     cursor: pointer;
     padding: 15px 24px 15px;
 }
-li .submenu{ 
-	list-style: none; 
-	margin: 0; 
-	padding: 0; 
-	padding-left: 1rem; 
+li .submenu{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	padding-left: 1rem;
 	padding-right: 1rem;
 }
 .button-row{
@@ -130,7 +158,7 @@ padding: 23px;
 }
 .row-user-account{
 	display: flex;
-	
+
 }
 .name-user{
 	padding-top: 0.5rem;
@@ -148,7 +176,7 @@ padding: 23px;
     width: 40px
 }
 .text-sm .nav-link {
-    padding: 0 !important; 
+    padding: 0 !important;
 }
 .l-navbar {
     position: fixed;
@@ -354,7 +382,7 @@ form#edit-mechanical table td input.text-box {
 
 
 ul {
- padding-left: 0px;	
+ padding-left: 0px;
 }
 ul li {
 	list-style: none;
@@ -419,7 +447,7 @@ div .btn-cancel {
 }
 .certificate .formsearch {
 	display: inline-flex;
-} 
+}
 .certificate .search-box {
 	margin-right: 15px;
 	position: relative;
@@ -587,12 +615,12 @@ display: none;
 .table-chemical .actiual_td {
 	background-color: #f8f8f8;
 	padding: 1px 1px 1px 1px;
-	
+
 }
 .table-mechanical .actiual_td {
 	background-color: #f8f8f8;
 	padding: 1px 1px 1px 1px;
-	
+
 }
 
 .table-mechanical .actiual_td .actiual_div {
@@ -612,7 +640,7 @@ display: none;
 div.dt-buttons {
     position: relative;
     float: right!important;
-	
+
 }
 .buttons-csv:hover{
 	color:#000!important;
@@ -850,7 +878,7 @@ body.body-pd .dataTables_wrapper {
 #nav-bar .sidebar > ul li:hover {
 	width: 240px;
     background: #efefef;
-	
+
 
 }
 #nav-bar.show .sidebar > ul li,
@@ -863,8 +891,8 @@ body.body-pd .dataTables_wrapper {
 #nav-bar .sidebar ul li:hover .nav_logo-name {
 	visibility: visible;
 	padding-left: 20px;
-	
-	
+
+
 }
 .card-body h4.btn.btn-block,
 .card-body h4.btn.btn-block:hover {
@@ -890,21 +918,21 @@ body.body-pd .dataTables_wrapper {
 #nav-bar .sidebar ul li.hoverli > i {
     padding: 17px 20px;
     width: 68px;
-	
+
 }
 #nav-bar .sidebar ul li.hoverli:hover > i {
 	background: #efefef;
 }
 #nav-bar .sidebar ul li.hoverli .file_menu li {
 	width: auto;
-} 
+}
 #nav-bar .sidebar ul li.hoverli .file_menu li a {
 	display: block;
 	white-space: nowrap;
 	padding: 15px 20px 10px;
 }
 #nav-bar.show .sidebar ul li.hoverli .file_menu li:hover a {
-	
+
 	background-color: transparent;
 }
 #nav-bar .sidebar ul li.hoverli:hover .file_menu {
@@ -927,7 +955,7 @@ body.body-pd .dataTables_wrapper {
 
 /* slick  */
 .table-row table {
-	text-align: center; 
+	text-align: center;
 }
 .table-row th {
 	background-color: #ebebeb;
@@ -1012,7 +1040,7 @@ body.body-pd .dataTables_wrapper {
 	}
 	.wrapper #nav-bar.show {
 		width: calc(68px + 156px);
-		
+
 	}
 	.wrapper .modal-content-right-bar {
 		width: 180px;
@@ -1129,7 +1157,7 @@ table.table-bordered th{
 .search{
 	position: relative;
 	box-shadow: 0 0 40px rgba(51, 51, 51, .1);
-	  
+
 	}
 .search input{
 
@@ -1144,7 +1172,7 @@ table.table-bordered th{
 	.search input:focus{
 
 	 box-shadow: none;
-	
+
 
 	}
 
@@ -1176,7 +1204,7 @@ table.table-bordered th{
 		font-size: 18px;
 		color: #333333;
 		/* text-align: left; */
-		border-bottom: 1px solid #ddd; 
+		border-bottom: 1px solid #ddd;
 	}
 	.accordion-button:focus {
 		box-shadow: none;
@@ -1214,7 +1242,7 @@ table.table-bordered th{
 		transform: rotate(0deg);
 		color: #E1261C;
 		padding: 5px;
-		
+
 	}
 	/* action style under document   */
 
@@ -1226,18 +1254,18 @@ table.table-bordered th{
 		border: none;
 		cursor: pointer!important;
 	  }
-	  
+
 	  .dropdown-toggle:hover, .dropdown-toggle:focus {
 		color: #E1261C!important;
 	  }
-	  
+
 	  .dropdown {
 		position: relative!important;
 		display: inline-block!important;
 	  }
-	  
+
 	  .dropdown-menu {
-		
+
 		position: absolute!important;
 		background-color: #f1f1f1;
 		min-width: 160px!important;
@@ -1246,16 +1274,15 @@ table.table-bordered th{
 		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2)!important;
 		z-index: 1;
 	  }
-	  
+
 	  .dropdown-menu a {
 		color: black;
 		padding: 16px 16px!important;
 		text-decoration: none!important;
 		display: block;
 	  }
-	  
+
 	  .dropdown a:hover {
 		background-color: #ddd;
 		color:red!important}
-	  
-	  
+

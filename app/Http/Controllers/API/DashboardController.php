@@ -16,7 +16,11 @@ class DashboardController extends Controller
     public function index()
     {
          // Count total users who are not deleted
-    $data['users'] = User::where('is_delete', 0)->count();
+    $data['users'] = User::where(function ($user)  {
+                return (\Auth::user()->role!=1 && \Auth::user()->role !=5  ?
+            $user->where('users.community_id', \Auth::user()->community_id) : \Auth::user()->role==4)?$user->where('users.centrale_id', auth()->user()->centrale_id):"";
+            })
+            ->where('is_delete', 0)->count();
 
     // Retrieve specific user details
     $user = User::join('centers', 'centers.id', '=', 'users.centrale_id')
