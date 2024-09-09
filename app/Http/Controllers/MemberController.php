@@ -81,12 +81,26 @@ return datatables()->of($members)
     ->editColumn('status', function($member) {
         $status = $member->status == 1 ? 'checked' : '';
         $disabled = ( $member->status == 1)? 'disabled' :(($member->status ==2)?'disabled' : ((auth()->user()->role==2 || auth()->user()->role==1  && $member->status ==0)? 'disabled' : ''));
-        return '<input class="toggle-class" type="checkbox" data-id="' . $member->id . '" ' . $status . ' data-toggle="toggle" data-on="Accepted" data-off="' . ($member->status == 0 ? 'Wait' : 'Rejected') . '" data-onstyle="success" data-offstyle="' . ($member->status == 0 ? 'default' : 'danger') . '" data-url="' . route('manage-members-status') . '" ' . $disabled . '>';
+        return '<input class="toggle-class view-box" type="checkbox" data-id="' . $member->id . '" ' . $status . ' data-toggle="toggle" data-on="Accepted" data-off="' . ($member->status == 0 ? 'Wait' : 'Rejected') . '" data-onstyle="success" data-offstyle="' . ($member->status == 0 ? 'default' : 'danger') . '" data-url="' . route('manage-members-status') . '" ' . $disabled . '>';
     })
     ->editColumn('description', function($member) {
         return '<button type="button" class="btn btn-primary view-category" data-toggle="modal" data-cat="' . $member->first_name . ' ' . $member->last_name . '" data-id-description="' . $member->description . '" data-target="#exampleModal">Description</button>';
     })
-    ->rawColumns(['action', 'status', 'description'])
+    ->editColumn('support_status', function($member) {
+         $status = $member->support_status == 2 ? 'checked' : '';
+
+        if($member->support_status == 1){
+            return '<div class="text-success">Supported by community</div>';
+        }elseif($member->support_status == 2 && auth()->user()->role == 4){
+        return '<input class="toggle-class toggle" type="checkbox" data-id="' . $member->id . '" ' . $status . ' data-toggle="toggle" data-on="Wait"  data-onstyle="success" data-offstyle="default' . '" data-url="' . route('manage-members-support-status') . '">';
+        }elseif($member->support_status == 3){
+ return '<div class="text-success">Supported by centrale</div>';
+        }
+        else{
+            return "Not applied yet";
+        }
+    })
+    ->rawColumns(['action', 'status', 'description','support_status'])
     ->make(true);
 
 
@@ -117,6 +131,7 @@ return datatables()->of($members)
             'address' => 'required',
             'dob' => 'required',
             'description' =>'required',
+            'support_status' => 'required',
         ]);
         $member = new Member();
         $member->first_name = $request->first_name;
@@ -128,6 +143,7 @@ return datatables()->of($members)
         $member->description = $request->description;
         ($request->cat_id ==1 ? $member->hospital=$request->hospital:$request->cat_id ==2 )? $member->school_name=$request->school_name && $member->sdms_code=$request->sdms_code : $member->other_support=$request->other_support;
         $member->user_id = auth()->user()->id;
+        $member->support_status = $request->support_status;
         $member->save();
         if($member){
             $request->session()->flash('success', 'New member added successfully');
@@ -174,6 +190,7 @@ return datatables()->of($members)
         $member->bod = $request->dob;
         $member->description = $request->description;
         $member->user_id = auth()->user()->id;
+        $member->support_status = $request->support_status;
         $member->save();
         if($member){
             $request->session()->flash('success', 'added');
@@ -211,6 +228,22 @@ return datatables()->of($members)
        $status = $request->status;
        if($id)
            return (new Member)->updateStatus($id,$status);
+       else
+           return false;
+   }
+   /**
+    * This function is used to Active Status update
+    *
+    * @param Request $request
+    * @return \Illuminate\View\View|\Illuminate\Routing\Redirector
+    * @author Caritas:kwizera
+    */
+   public function supportStatus(Request $request)
+   {
+       $id = $request->id;
+       $status = $request->supportstatus;
+       if($id)
+           return (new Member)->updateSupportStatus($id,$status);
        else
            return false;
    }

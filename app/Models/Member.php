@@ -24,6 +24,7 @@ class Member extends Model
         'sdms_code',
         'other_support',
         'status',
+        'support_status',
     ];
 
     public function deleteModel($id) {
@@ -56,6 +57,16 @@ class Member extends Model
            ->event("status changed")
         ->log('Member Status Diactivated');
         }
+    return $model;
+    }
+     /** This model function is used to update status CTR
+    *
+    * @return bool
+    * @author Caritas:kwizera
+    */
+   public function updateSupportStatus($id,$status) {
+       $model = $this->where('id', $id)->update(['support_status'=>$status]);
+
     return $model;
     }
 }

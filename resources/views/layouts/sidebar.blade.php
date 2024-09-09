@@ -6,7 +6,7 @@
                 @can('Manage-Members')
 
                 <li><a href="{{ route('manage-members') }}" class="nav_logo"><i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                        <span class="nav_logo-name">Manage Members</span> </a>
+                        <span class="nav_logo-name">Manage Beneficiaries</span> </a>
                 </li>
 
               @endcan
@@ -30,6 +30,11 @@
                 <span class="nav_logo-name">Manage Categories</span> </a>
         </li>
               @endcan
+              @can('Manage-Income')
+            <li><a href="{{ route('manage-income') }}" class="nav_logo"><i class="fa fa-cog" aria-hidden="true"></i>
+                    <span class="nav_logo-name">Manage Grant</span> </a>
+            </li>
+            @endcan
                 @can('Manage-Users')
 
                 <li><a href="{{ route('manage-user') }}" class="nav_logo"><i class="fa fa-user-circle" aria-hidden="true"></i>

@@ -97,7 +97,7 @@
                                         {{ $members }}
                                     </h3>
                                     <p class="d-flex justify-content-center">
-                                        Manage Members
+                                        Manage Beneficiaries
                                     </p>
                                 </div>
 

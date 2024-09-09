@@ -49,6 +49,7 @@
                                             <th>DESCRIPTION</th>
                                             <th>CENTRALE NAME</th>
                                             <th>COMMUNITY NAME</th>
+                                            <th>Support option</th>
                                             <th>CREATED BY</th>
                                             <th>UPDATED AT</th>
 
@@ -224,6 +225,9 @@
                         data: 'community_name',
                         name: 'community_name'
 
+                        },{
+                            data: 'support_status',
+                            name: 'support_status',
                         },
                         {
                             data: 'created_by',
@@ -310,7 +314,7 @@
                 });
             });
             //activate or inactive user
-            $(document).on('change', '.toggle-class', function() {
+            $(document).on('change', '.view-box', function() {
                 var id = $(this).attr('data-id');
                 var status_url = $(this).attr('data-url');
                 var $this = $(this);
@@ -549,6 +553,100 @@ document.getElementById('loadingSpinner').style.display = 'none';
 
 console.error('Error:', error);
 });
+});
+
+// Support
+
+$(document).on('change', '.toggle', function() {
+var id = $(this).attr('data-id');
+var status_url2 = $(this).attr('data-url');
+var $this = $(this);
+$this.prop('disabled', true);
+// alert(id);
+if ($(this).is(":checked")) {
+var status = 3;
+var statusname = " support";
+} else {
+var status = 4;
+var statusname = " support ";
+}
+swal({
+title: 'Are you able to' + statusname + '?',
+type: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#E1261C',
+cancelButtonColor: '#EBEBEB',
+confirmButtonText: 'Yes',
+cancelButtonText: 'No',
+confirmButtonClass: 'btn',
+cancelButtonClass: 'btn',
+}).then(function(result) {
+
+if (result.value==true) {
+$.ajaxSetup({
+headers: {
+'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+}
+});
+$.ajax({
+type: "POST",
+dataType: 'json',
+url: status_url2,
+data: {
+id: id,
+status: 3
+},
+beforeSend: function() {
+$('.loader1').show();
+},
+success: function(data) {
+$('.loader1').hide();
+console.log(data)
+if (data) {
+swal({
+title: "Success",
+text: "Request approved.",
+type: "success",
+confirmButtonColor: '#E1261C',
+});
+$('#manage-users').DataTable().draw();
+}
+}
+});
+} else if(result.dismiss=="cancel") {
+$.ajaxSetup({
+headers: {
+'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+}
+});
+$.ajax({
+type: "POST",
+dataType: 'json',
+url: status_url,
+data: {
+id: id,
+status: 4
+},
+beforeSend: function() {
+$('.loader1').show();
+},
+success: function(data) {
+$('.loader1').hide();
+if (data) {
+swal({
+title: "Fail",
+text: "This personal rejected.",
+type: "success",
+confirmButtonColor: '#E1261C',
+});
+$('#manage-users').DataTable().draw();
+}
+}
+});
+// $("#manage-users").DataTable().draw();
+}
+});
+
 });
         </script>
     @endsection

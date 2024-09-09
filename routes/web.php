@@ -86,6 +86,7 @@ Route::group(['prefix' => '/members', 'middleware' => ['auth','nocache','can:Man
     Route::get('/edit/{id}', 'MemberController@edit')->name('manage-members-edit');
     Route::any('/delete/{id}', 'MemberController@delete')->name('manage-members-delete');
     Route::post('/status'    , 'MemberController@status')->name('manage-members-status');
+     Route::post('/support-status'    , 'MemberController@supportStatus')->name('manage-members-support-status');
 });
 
 #centrale
@@ -119,4 +120,14 @@ Route::group(['prefix' => '/support', 'middleware' => ['auth','nocache','can:Man
     Route::post('/update-support', 'SupportController@update')->name('manage-support-update');
     Route::get('/support', 'SupportController@index')->name('manage-support');
     Route::post('/status'    , 'SupportController@status')->name('manage-support-status');
+});
+
+#Income
+Route::group(['prefix' => '/income', 'middleware' => ['auth','nocache','can:Manage-Income'], 'namespace' => 'App\Http\Controllers', 'page-group' => '/income'], function () {
+    Route::any('/list-income','IncomeController@getIncomeListAjax')->name('getIncomeListAjax');
+    Route::post('/save-income', 'IncomeController@store')->name('manage-income-save');
+    Route::post('/update-income', 'IncomeController@update')->name('manage-income-update');
+    Route::get('/income', 'IncomeController@index')->name('manage-income');
+    Route::post('/status'    , 'IncomeController@status')->name('manage-income-status');
+    Route::get('incomes/{id}', 'IncomeController@show')->name('manage-income-single');
 });

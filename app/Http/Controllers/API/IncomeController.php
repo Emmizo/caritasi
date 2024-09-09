@@ -1,60 +1,32 @@
 <?php
 
-namespace App\Providers;
+namespace App\Http\Controllers\API;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
-use Laravel\Passport\Passport;
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Income;
-use Illuminate\Support\Facades\Auth;
 use DB;
-class AppServiceProvider extends ServiceProvider
+use Illuminate\Support\Facades\Auth;
+class IncomeController extends Controller
 {
     /**
-     * Register any application services.
+     * Display a listing of the resource.
      */
-    public function register(): void
+    public function index()
     {
-        Passport::ignoreRoutes();
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-
-         Passport::enablePasswordGrant();
-       View::composer('*', function ($view) {
-    // Initialize the data array
-    $data = [];
-
-    // Get the authenticated user
-    $authUser = Auth::user();
-
-    // Check if a user is authenticated
-    if ($authUser) {
-        // Define the query for user details
-        $query = User::join('centers', 'centers.id', '=', 'users.centrale_id')
-            ->join('communities', 'communities.id', '=', 'users.community_id')
-            ->select('users.*', 'communities.community_name', 'centers.center_name')
-            ->where('users.id', $authUser->id);
-
-        // Apply conditions based on user role for the details query
-        if ($authUser->role != 1 && $authUser->role != 5) {
-            $query->where('users.community_id', $authUser->community_id);
-        } elseif ($authUser->role == 4) {
-            $query->where('users.centrale_id', $authUser->centrale_id);
-        }
-
-        // Execute the details query and get the first result
-        $data['details'] = $query->first();
-
-        // Now, calculate the total amount based on the user's role
+         $authUser = Auth::user();
         $userRole = $authUser->role;
+        $data['incomes'] = Income::join('users','users.id','incomes.user_id')
+        ->join('incomes_source','incomes_source.id','incomes.income_source')
+       ->leftJoin('centers', 'centers.id', '=', 'users.centrale_id')
+       ->leftJoin('communities', 'communities.id', '=', 'users.community_id')
+        ->select('users.role','users.community_id','users.centrale_id','incomes.id as income_id','centers.id as center_id', 'centers.center_name', 'communities.id as community_id','communities.community_name','incomes_source.id as source_id','incomes_source.name as income_source','incomes.status as statuses','incomes.amount as amount_per_each','users.first_name as user_first_name','users.last_name as user_last_name','incomes.updated_at')->orderBy('incomes.created_at', 'desc')
 
+        ->where(function ($incomes){
+            return (auth()->user()->role==2  ?
+                $incomes->where('users.community_id', auth()->user()->community_id) : auth()->user()->role==4 || auth()->user()->role ==3  )?$incomes->where('users.centrale_id', auth()->user()->centrale_id):"";
+        })
+        ->get();
         $sum = Income::join('users', 'users.id', '=', 'incomes.user_id')
             ->join('incomes_source', 'incomes_source.id', '=', 'incomes.income_source')
             ->leftJoin('centers', 'centers.id', '=', 'users.centrale_id')
@@ -97,12 +69,55 @@ class AppServiceProvider extends ServiceProvider
 
         // Assign the total amount to the data array
         $data['amount'] = $sum->total_amount;
+        return response()->json(["msg"=>'success',"data"=>$data,"status"=>200],200);
+        //
     }
 
-    // Share the data with all views
-    $view->with('data', $data);
-});
-
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
 }

@@ -94,7 +94,19 @@
                                                <small class="text-danger">{{ $errors->first('description') }}</small>
                                            </div>
                                        </div>
-
+<div class="col-md-6 mb-3 form-group clearfix">
+    <label for="profile_pic">Are you able to Support?</label><br><br>
+    <div class="icheck-primary d-inline">
+        <input type="radio" id="radioPrimary1" name="support_status" checked="" value="1"
+        {{ $info->support_status == 1 ? 'checked' : '' }}
+        >
+        <label for="radioPrimary1">Ourselves</label>
+    </div>
+    <div class="icheck-danger d-inline">
+        <input type="radio" id="radioPrimary2" name="support_status" value="2" {{ $info->support_status == 2 ? 'checked' : '' }}>
+        <label for="radioPrimary2">We can not</label>
+    </div>
+</div>
                                    <div class=" col-md-6">
                                        <button type="submit" class="btn btn-dark btn-lg" id="send_btn2"> <i
                                                class="fa fa-plus"></i>&nbsp; Save</button>

@@ -7,6 +7,7 @@ use App\Http\Controllers\API\MemberController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\SupportController;
+use App\Http\Controllers\API\IncomeController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\TextGenerationController;
 use App\Http\Controllers\USSD\UssdController;
@@ -58,5 +59,6 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api']
 Route::group(['namespace' => 'Api', 'prefix' => 'v1','middleware' => 'auth:api'], function () {
     Route::get('/list-support',[SupportController::class,'index']);
     Route::post('/status'    , [SupportController::class,'status']);
+    Route::get('list-income',[IncomeController::class,'index']);
 });
 
