@@ -13,7 +13,7 @@ class IncomeController extends Controller
      */
     public function index()
     {
-     $data['title'] = "Manage Income";
+     $data['title'] = "Manage Grant";
 
 $sum = $userRole = auth()->user()->role;
 
@@ -124,7 +124,7 @@ $sum = $userRole = auth()->user()->role;
             'income_source' => $request->income_source,
             'amount' => $request->amount,
         ]);
-        
+
          $request->session()->flash('success', "Income is successfully created");
        return response()->json(['status' => 201,'message' => "new support provided"]);
         //
