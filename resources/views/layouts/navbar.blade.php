@@ -6,7 +6,8 @@
     <div class="center-digital">
         <h2 style="font-size: 15px;" class="text-uppercase">
 
-            <b> @if(Auth::user()->role == 5)
+            <b>
+                {{-- @if(Auth::user()->role == 5)
                 President of Parish
                 @elseif(Auth::user()->role == 1)
                 Admin of
@@ -18,14 +19,18 @@
                 Father
                 @elseif(Auth::user()->role == 4)
                 President of Centrale
-                @endif
+                @endif --}}
                 {{-- @endif
                 @endif
                 @endif
                 @endif --}}
-                Welcome to
-                {{ config('app.name') }}
-
+                @if(Auth::user()->role !=1)Welcome
+                @endif
+                {{-- to --}}
+                {{-- {{ config('app.name') }} --}}
+ @if(Auth::user()->role ==1)
+ ADMIN PANEL
+ @endif
                 @if(Auth::check())
                 @if(Auth::user()->centrale_id !== null )
                 @if(Auth::user()->role ==2 )

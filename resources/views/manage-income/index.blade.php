@@ -32,7 +32,7 @@
                         <div class="col-md-10 mb-3">
 <button type="button" class="btn btn-primary view-category" data-toggle="modal"
     data-target="#exampleModal2">
-    <i class="fa fa-plus"></i>&nbsp;Add income
+    <i class="fa fa-plus"></i>&nbsp;Add grant
 </button>
                         </div>
                         <div class="col-md-2 mb-3 parent">

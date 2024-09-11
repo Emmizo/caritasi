@@ -13,8 +13,8 @@ class MemberController extends Controller
      */
     public function index()
     {
-        $data['title'] = "Manage members";
-        $data['addText'] = "Add member";
+        $data['title'] = "Manage beneficiaries";
+        $data['addText'] = "Add beneficiarie";
         return view("manage-members.index",$data);
         //
     }

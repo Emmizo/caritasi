@@ -18,7 +18,14 @@ class IncomeController extends Controller
 $sum = $userRole = auth()->user()->role;
 
 
-        $data['sources'] = \DB::table('incomes_source')->select('id','name')->get();
+
+        $inc = \DB::table('incomes_source')->select('id','name')
+ ->where(function ($inc){
+            return auth()->user()->role!=2  ?
+                $inc->where('incomes_source.id', 3) : "";
+        })
+        ->get();
+        $data['sources'] = $inc;
         return view("manage-income.index",$data);
     }
 
