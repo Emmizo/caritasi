@@ -24,18 +24,21 @@
                 @endif
                 @endif
                 @endif --}}
-                @if(Auth::user()->role !=1)Welcome
+                @if(Auth::user()->role !=1 )Welcome
                 @endif
                 {{-- to --}}
                 {{-- {{ config('app.name') }} --}}
  @if(Auth::user()->role ==1)
  ADMIN PANEL
  @endif
+ @if(Auth::user()->role ==3) In
+  Nyundo Diocese
+  @endif
                 @if(Auth::check())
                 @if(Auth::user()->centrale_id !== null )
                 @if(Auth::user()->role ==2 )
                  in Community of {{ $data['details']->community_name }}
-                @else
+                @elseif(Auth::user()->role ==4)
                   in Centrale {{ $data['details']->center_name }}
 
                 @endif
