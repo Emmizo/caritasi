@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\USSD\UssDController;
 
 /* Logout */
 Route::get('/logout', function () {
@@ -131,3 +132,5 @@ Route::group(['prefix' => '/income', 'middleware' => ['auth','nocache','can:Mana
     Route::post('/status'    , 'IncomeController@status')->name('manage-income-status');
     Route::get('incomes/{id}', 'IncomeController@show')->name('manage-income-single');
 });
+Route::post('/ussd', [USSDController::class, 'handleUSSD']);
+Route::post('/ussd/next', [UssdController::class, 'handleNext']);

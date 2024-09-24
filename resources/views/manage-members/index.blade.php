@@ -430,7 +430,7 @@ console.log(member_id);
 
             });
 
-        $(document).ready(function() {
+ $(document).ready(function() {
 
 
             $('#add-support').validate({

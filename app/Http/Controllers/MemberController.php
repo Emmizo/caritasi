@@ -112,8 +112,8 @@ return datatables()->of($members)
     {
 
         $data['categories'] = Category::all();
-        $data['title'] = "Manage Members - Add";
-        $data['brVal'] = "Manage Members";
+        $data['title'] = "Manage Beneficiares - Add";
+        $data['brVal'] = "Manage Beneficiares";
         return view('manage-members.add', $data);
     }
 
@@ -169,8 +169,8 @@ return datatables()->of($members)
     public function edit(Request $request,Member $member)
     {
         $data['categories'] = Category::all();
-        $data['title'] = "Manage Members - Edit";
-        $data['brVal'] = "Manage Members";
+        $data['title'] = "Manage Beneficiares - Edit";
+        $data['brVal'] = "Manage Beneficiares";
         $data['info'] = $member::find($request->id);
         return view('manage-members.edit', $data);
     }

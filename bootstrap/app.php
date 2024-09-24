@@ -20,6 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
     'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
     'auth:api' => \App\Http\Middleware\EnsureTokenIsValid::class,
         ]);
+         $middleware->validateCsrfTokens(except: [
+            'ussd',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
        $exceptions->render(function (AuthenticationException $e, Request $request) {
@@ -30,3 +33,5 @@ return Application::configure(basePath: dirname(__DIR__))
             }
             });
     })->create();
+
+
