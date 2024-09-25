@@ -203,7 +203,7 @@
         });
 
         $(document).ready(function() {
-            $('#phone').mask('(000) 000-0000');
+            $('#phone').mask('+000000000000');
 
             if ($('#role').val() == '1') {
                 $('#show_delete_feature').show();

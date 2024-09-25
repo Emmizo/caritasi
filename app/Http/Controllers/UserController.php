@@ -334,7 +334,7 @@ $query->whereIn('users.role', [2, 3])
         $info['name'] = "-";
         $info['email'] = $request->email;
         $info['status'] = $request->status;
-        $info['phone_number'] = $request->phone_number;
+        $info['phone_number'] =$request->phone_number;
         $info['is_delete'] = 0;
         $info['status']=1;
         $info['role'] = $request->role;

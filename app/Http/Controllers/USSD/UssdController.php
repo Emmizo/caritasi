@@ -115,7 +115,7 @@ private function viewMembers($inputSteps, $user)
         ->get();
 
     // Prepare the USSD response
-    $response = "CON Member Details:\n"; // Start with CON
+    $response = "CON Beneficiaries Details:\n"; // Start with CON
 
     foreach ($members as $m) {
         $response .= "Name: " . $m->user_first_name . " " . $m->user_last_name . "\n";
@@ -130,9 +130,9 @@ private function viewMembers($inputSteps, $user)
 
     // Check if there are more members to display
     if (count($members) == $membersPerPage) {
-        $response .= "Reply with 'N' for more members.\n"; // Prompt for next
+        $response .= "Reply with 'N' for more beneficiaries.\n"; // Prompt for next
     } else {
-        $response .= "END No more members to display.\n";
+        $response .= "END No more beneficiaries to display.\n";
     }
 
     return response($response, 200)->header('Content-Type', 'text/plain');
@@ -142,12 +142,12 @@ private function registerMember($inputSteps, $user)
 {
     // Step 1: Ask for the first name
     if (count($inputSteps) == 1) {
-        return response("CON Enter the new member's first name:", 200)->header('Content-Type', 'text/plain');
+        return response("CON Enter the new beneficiary's first name:", 200)->header('Content-Type', 'text/plain');
     }
 
     // Step 2: Ask for the last name
     if (count($inputSteps) == 2) {
-        return response("CON Enter the new member's last name:", 200)->header('Content-Type', 'text/plain');
+        return response("CON Enter the new beneficiary's last name:", 200)->header('Content-Type', 'text/plain');
     }
 
     // Step 3: Ask for the category (1: Patient, 2: Student, 3: Other)
@@ -157,22 +157,22 @@ private function registerMember($inputSteps, $user)
 
     // Step 4: Ask for the phone number
     if (count($inputSteps) == 4) {
-        return response("CON Enter the new member's phone number:", 200)->header('Content-Type', 'text/plain');
+        return response("CON Enter the new beneficiary's phone number:", 200)->header('Content-Type', 'text/plain');
     }
 
     // Step 5: Ask for the address
     if (count($inputSteps) == 5) {
-        return response("CON Enter the new member's address:", 200)->header('Content-Type', 'text/plain');
+        return response("CON Enter the new beneficiaryr's address:", 200)->header('Content-Type', 'text/plain');
     }
 
     // Step 6: Ask for the date of birth (DOB)
     if (count($inputSteps) == 6) {
-        return response("CON Enter the new member's Date of Birth (YYYY-MM-DD):", 200)->header('Content-Type', 'text/plain');
+        return response("CON Enter the new beneficiary's Date of Birth (YYYY-MM-DD):", 200)->header('Content-Type', 'text/plain');
     }
 
     // Step 7: Ask for the description
     if (count($inputSteps) == 7) {
-        return response("CON Enter a brief description of the member:", 200)->header('Content-Type', 'text/plain');
+        return response("CON Enter a brief description of the beneficiary:", 200)->header('Content-Type', 'text/plain');
     }
 
     // Step 8: Ask for hospital, school details, or other support based on the category
