@@ -42,8 +42,8 @@ class Member extends Model
     * @return bool
     * @author Caritas:kwizera
     */
-   public function updateStatus($id,$status) {
-       $model = $this->where('id', $id)->update(['status'=>$status]);
+   public function updateStatus($id,$status,$support_status) {
+       $model = $this->where('id', $id)->update(['status'=>$status,'support_status'=>$support_status]);
        if($status == 1){
         activity()
         ->performedOn(Member::find($id))

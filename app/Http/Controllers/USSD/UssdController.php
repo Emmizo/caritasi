@@ -214,7 +214,8 @@ private function registerMember($inputSteps, $user)
         }
 
         $member->user_id = $user->id;         // Authenticated user's ID
-        $member->support_status = 0;          // Default support status
+        $member->support_status = 0;
+                 // Default support status
 
         // Save the new member to the database
         try {

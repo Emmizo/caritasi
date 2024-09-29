@@ -125,9 +125,25 @@ $query->whereIn('users.role', [2, 3])
      */
     public function add(Request $request)
     {
+        $auth =auth()->user()->role;
 
-        $data['roles'] = Role::all();
-        $data['centrales'] = Center::all();
+         $roles= Role::where(function($query)use ($auth) {
+            if ($auth == 4) {
+                $query->where('id', 2);
+            }elseif($auth == 3){
+                $query->whereIn('id',[2,4]);
+            }elseif($auth == 5){
+                $query->whereIn('id',[2,4,3]);
+            }
+            elseif($auth == 1){
+                $query->whereIn('id',[2,4,3,5]);
+            }
+
+        })->get();
+        $data['roles']= $roles;
+        $centrale = auth()->user()->centrale_id;
+       $center = Center::where('id',$centrale) ->get();
+         $data['centrales'] = $center;
         $data['commonuties'] = Community::all();
         $data['title'] = "Manage Users - Add";
         $data['brVal'] = "Manage Users";
