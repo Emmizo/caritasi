@@ -55,9 +55,9 @@ public function updateExistUser(array $data)
     $this->update($data);
 
     // Log the activity
-    activity()->performedOn($this)
-        ->withProperties(['data' =>$data])
-        ->log('User updated');
+    // activity()->performedOn($this)
+    //     ->withProperties(['data' =>$data])
+    //     ->log('User updated');
 
     // Return the updated user
     return $this;
@@ -114,12 +114,12 @@ public function updateExistUser(array $data)
                                  'created_at'=>date('Y-m-d H:i:s'),
                                  'updated_at'=>date('Y-m-d H:i:s'),
                              ]);
-                          // Log the activity
-                         activity()
-                       ->performedOn(User::find($user))
-                      ->withProperties(['info' => $info])
-                      ->event('new user')
-                   ->log('New User added');
+                //           // Log the activity
+                //          activity()
+                //        ->performedOn(User::find($user))
+                //       ->withProperties(['info' => $info])
+                //       ->event('new user')
+                //    ->log('New User added');
                  return $user;
 
      }
@@ -148,11 +148,11 @@ public function updateExistUser(array $data)
        $user= User::where('id', $info['id'])
         ->update($data);
         // Log the activity
-        activity()
-        ->performedOn(User::find($user))
-        ->event("updated")
-       ->withProperties(['info' => $info])
-    ->log('User updated');
+    //     activity()
+    //     ->performedOn(User::find($user))
+    //     ->event("updated")
+    //    ->withProperties(['info' => $info])
+    // ->log('User updated');
 
        return $user;
     }
@@ -175,13 +175,13 @@ public function updateExistUser(array $data)
 
        $user= User::where('id', $info['id'])
                     ->update($data);
-                    
+
                     // Log the activity
-        activity()
-        ->performedOn(User::find($user))
-        ->withProperties(['info' => $info])
-        ->event('update')
-        ->log('User profile updated');
+        // activity()
+        // ->performedOn(User::find($user))
+        // ->withProperties(['info' => $info])
+        // ->event('update')
+        // ->log('User profile updated');
     return $user;
     }
 /**
@@ -193,11 +193,11 @@ public function updateExistUser(array $data)
     public function deleteUser($id) {
 
        $user= $this->where('id', $id)->update(['is_delete'=>1]);
-       activity()
-        ->performedOn(User::find($id))
-       ->withProperties(User::find($id))
-       ->event('deleted')
-    ->log('User deleted');
+    //    activity()
+    //     ->performedOn(User::find($id))
+    //    ->withProperties(User::find($id))
+    //    ->event('deleted')
+    // ->log('User deleted');
     return $user;
      }
      /**
@@ -208,19 +208,19 @@ public function updateExistUser(array $data)
      */
     public function updateStatus($id,$status) {
         $user= $this->where('id', $id)->update(['status'=>$status]);
-        if($status == 0){
-        activity()
-        ->performedOn(User::find($id))
-       ->withProperties(['info' => User::find($id)])
-       ->event("status changed")
-        ->log('User Status activated');
-        }else{
-            activity()
-            ->performedOn(User::find($id))
-           ->withProperties( User::find($id))
-           ->event("status changed")
-        ->log('User Status Diactivated');
-        }
+    //     if($status == 0){
+    //     activity()
+    //     ->performedOn(User::find($id))
+    //    ->withProperties(['info' => User::find($id)])
+    //    ->event("status changed")
+    //     ->log('User Status activated');
+    //     }else{
+    //         activity()
+    //         ->performedOn(User::find($id))
+    //        ->withProperties( User::find($id))
+    //        ->event("status changed")
+    //     ->log('User Status Diactivated');
+    //     }
        return $user;
      }
       /**
