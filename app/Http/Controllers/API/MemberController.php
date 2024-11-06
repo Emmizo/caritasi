@@ -18,7 +18,7 @@ class MemberController extends Controller
         $member = Member::join('categories','categories.id','members.cat_id')
         ->join('users','users.id','members.user_id')
         ->join('communities','communities.id','users.community_id')
-        ->select('communities.community_name','members.id as memberId','users.role','users.first_name as user_first_name','users.last_name as user_last_name','categories.category_name','categories.description as cat_description','members.first_name','members.last_name','members.status','members.description','members.bod as birth_day','members.phone','members.school_name','members.hospital','members.other_support','members.sdms_code','members.created_at')->orderBy('members.updated_at','desc')
+        ->select('communities.community_name','members.id as memberId','users.role','users.first_name as user_first_name','users.last_name as user_last_name','categories.category_name','categories.description as cat_description','members.*')->orderBy('members.updated_at','desc')
         ->where(function ($member){
             return (Auth::user()->role!=1 && Auth::user()->role !=5  ?
             $member->where('users.community_id', Auth::user()->community_id) : Auth::user()->role==4)?$member->where('users.centrale_id', auth()->user()->centrale_id):"";
