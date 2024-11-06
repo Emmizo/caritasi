@@ -31,6 +31,9 @@
  @if(Auth::user()->role ==1)
  ADMIN PANEL
  @endif
+ @if(Auth::user()->role ==5) In
+Nyundo Parish
+@endif
  @if(Auth::user()->role ==3) In
   Nyundo Diocese
   @endif

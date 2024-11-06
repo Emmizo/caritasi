@@ -143,6 +143,8 @@ $sum = $userRole = auth()->user()->role;
     public function show(Request $request)
     {
          $id = $request->id;
+        //  print_r($id);
+        //  exit;
          $authUser = Auth::user();
          $userRole = $authUser->role;
 

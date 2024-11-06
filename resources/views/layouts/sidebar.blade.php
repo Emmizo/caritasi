@@ -15,6 +15,12 @@
                         <span class="nav_logo-name">Manage Supports</span> </a>
                 </li>
                 @endcan
+                @can('Manage-Parish')
+                <li><a href="{{ route('manage-parish') }}" class="nav_logo"><i class="fa fa-align-center fa-lg"
+                            aria-hidden="true"></i>
+                        <span class="nav_logo-name">Manage Parish</span> </a>
+                </li>
+                @endcan
               @can('Manage-Centrale')
               <li><a href="{{ route('manage-centrales') }}" class="nav_logo"><i class="fa fa-align-center fa-lg" aria-hidden="true"></i>
                 <span class="nav_logo-name">Manage Centrale</span> </a>
@@ -31,7 +37,7 @@
         </li>
               @endcan
               @can('Manage-Income')
-            <li><a href="{{ route('manage-income') }}" class="nav_logo"><i class="fa fa-cog" aria-hidden="true"></i>
+            <li><a href="{{ route('manage-income') }}" class="nav_logo"><i class="fa fa-money" aria-hidden="true"></i>
                     <span class="nav_logo-name">Manage Grant</span> </a>
             </li>
             @endcan

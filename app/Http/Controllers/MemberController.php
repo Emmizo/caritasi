@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Member;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Province;
 
 class MemberController extends Controller
 {
@@ -15,6 +16,7 @@ class MemberController extends Controller
     {
         $data['title'] = "Manage beneficiaries";
         $data['addText'] = "Add beneficiarie";
+
         return view("manage-members.index",$data);
         //
     }
@@ -128,6 +130,7 @@ return datatables()->of($members)
         $data['categories'] = Category::all();
         $data['title'] = "Manage Beneficiares - Add";
         $data['brVal'] = "Manage Beneficiares";
+        $data['provinces']=  Province::all();
         return view('manage-members.add', $data);
     }
 
@@ -135,41 +138,126 @@ return datatables()->of($members)
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+{
+    // Add validation rules for the new fields
+    $validator = $request->validate([
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'cat_id' => 'required',
+        'phone' => 'required|unique:members,phone',
+        'address' => 'required',
+        // 'bod' => 'required',
+        // 'description' => 'required',
+        'support_status' => 'required',
+        // Add new fields below
+        // 'province_id' => 'required',
+        // 'district_id' => 'required',
+        // 'sector_id' => 'required',
+        // 'cell_id' => 'required',
+        // 'village_id' => 'required',
+        // 'resident' => 'required',
+        // 'identification' => 'required',
+        // 'disability' => 'required',
+        // 'parent_status' => 'required',
+        // Father's fields
+        // 'father_name' => 'required',
+        // 'official_paper_type' => 'nullable',
+        // 'father_dob' => 'required',
+        // 'id_number' => 'required',
+        // 'phone_number' => 'required',
+        // 'job_type' => 'nullable',
+        // 'income_per_month' => 'nullable|numeric',
+        // 'house' => 'required',
+        // 'education_level' => 'nullable',
+        // 'disability_type' => 'nullable',
+        // 'head_of_family' => 'required',
+        // Mother's fields
+        // 'mother_name' => 'required',
+        // 'mother_dob' => 'required',
+        // 'mother_official_paper_type' => 'nullable',
+        // 'mother_id_number' => 'required',
+        // 'mother_phone_number' => 'required',
+        // 'mother_job_type' => 'nullable',
+        // 'mother_income_per_month' => 'nullable|numeric',
+        // 'mother_house' => 'required',
+        // 'mother_education_level' => 'nullable',
+        // 'mother_disability_type' => 'nullable',
+        // 'mother_head_of_family' => 'required',
+    ]);
 
-        $validator = $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'cat_id' =>'required',
-            'phone' => 'required|unique:members,phone',
-            'address' => 'required',
-            'dob' => 'required',
-            'description' =>'required',
-            'support_status' => 'required',
-        ]);
-        $member = new Member();
-        $member->first_name = $request->first_name;
-        $member->last_name = $request->last_name;
-        $member->cat_id = $request->cat_id;
-        $member->phone = $request->phone;
-        $member->address = $request->address;
-        $member->bod = $request->dob;
-        $member->description = $request->description;
-        ($request->cat_id ==1 ? $member->hospital=$request->hospital:$request->cat_id ==2 )? $member->school_name=$request->school_name && $member->sdms_code=$request->sdms_code : $member->other_support=$request->other_support;
-        $member->user_id = auth()->user()->id;
-        $member->support_status = $request->support_status;
-        ($request->support_status==1?$member->status = 1:0);
-       ($request->support_status==1? $member->accepted_level = auth()->user()->role:4);
-        $member->save();
-        if($member){
-            $request->session()->flash('success', 'New beneficiary added successfully');
-            return redirect()->route('manage-members')->withInput();
-            }else{
-                $request->session()->flash('error', 'Something went wrong');
-                return redirect()->route('manage-members')->withInput();
-            }
-        //
+    $member = new Member();
+    $member->first_name = $request->first_name;
+    $member->last_name = $request->last_name;
+    $member->cat_id = $request->cat_id;
+    $member->phone = $request->phone;
+    $member->address = $request->address;
+    $member->bod = $request->dob; // Assuming this is the correct field for date of birth
+    $member->description = $request->description;
+
+    // Add fields from the form
+    $member->province_id = $request->province_id;
+    $member->district_id = $request->district_id;
+    $member->sector_id = $request->sector_id;
+    $member->cell_id = $request->cell_id;
+    $member->village_id = $request->village_id;
+    $member->resident = $request->resident;
+    $member->identification = $request->identification;
+    $member->disability = $request->disability;
+    $member->parent_status = $request->parent_status;
+    $member->father_name = $request->father_name;
+    $member->official_paper_type = $request->official_paper_type;
+    $member->id_number = $request->id_number;
+    $member->phone_number = $request->phone_number;
+    $member->job_type = $request->job_type;
+    $member->income_per_month = $request->income_per_month;
+    $member->house = $request->house;
+    $member->education_level = $request->education_level;
+    $member->disability_type = $request->disability_type;
+    $member->head_of_family = $request->head_of_family;
+    $member->father_dob = $request->father_dob;
+
+    // Add mother's fields
+    $member->mother_name = $request->mother_name;
+    $member->mother_dob = $request->mother_dob;
+    $member->mother_official_paper_type = $request->mother_official_paper_type;
+    $member->mother_id_number = $request->mother_id_number;
+    $member->mother_phone_number = $request->mother_phone_number;
+    $member->mother_job_type = $request->mother_job_type;
+    $member->mother_income_per_month = $request->mother_income_per_month;
+    $member->mother_house = $request->mother_house;
+    $member->mother_education_level = $request->mother_education_level;
+    $member->mother_disability_type = $request->mother_disability_type;
+    $member->mother_head_of_family = $request->mother_head_of_family;
+
+    // Handle conditional fields based on `cat_id`
+    if ($request->cat_id == 1) {
+        $member->hospital = $request->hospital;
+    } elseif ($request->cat_id == 2) {
+        $member->school_name = $request->school_name;
+        $member->sdms_code = $request->sdms_code;
+        $member->study_year = $request->study_year;
+    } else {
+        $member->other_support = $request->other_support;
     }
+
+    $member->user_id = auth()->user()->id;
+    $member->support_status = $request->support_status;
+
+    // Set status and accepted_level based on support_status
+    $member->status = ($request->support_status == 1) ? 1 : 0;
+    $member->accepted_level = ($request->support_status == 1) ? auth()->user()->role : 4;
+
+    $member->save();
+
+    if ($member) {
+        // $request->session()->flash('success', 'New beneficiary added successfully');
+        // return redirect()->route('manage-members')->withInput();
+        return response()->json(["msg" =>'success','status'=>201],201);
+    } else {
+        $request->session()->flash('error', 'Something went wrong');
+        return redirect()->route('manage-members')->withInput();
+    }
+}
 
     /**
      * Display the specified resource.
@@ -188,6 +276,7 @@ return datatables()->of($members)
         $data['title'] = "Manage Beneficiares - Edit";
         $data['brVal'] = "Manage Beneficiares";
         $data['info'] = $member::find($request->id);
+        $data['provinces']=  Province::all();
         return view('manage-members.edit', $data);
     }
 
@@ -196,26 +285,122 @@ return datatables()->of($members)
      * Update the specified resource in storage.
      */
     public function update(Request $request, Member $member)
-    {
-        $member = $member::find($request->id);
-        $member->first_name = $request->first_name;
-        $member->last_name = $request->last_name;
-        $member->cat_id = $request->cat_id;
-        $member->phone = $request->phone;
-        $member->address = $request->address;
-        $member->bod = $request->dob;
-        $member->description = $request->description;
-        $member->user_id = auth()->user()->id;
-        $member->support_status = $request->support_status;
-        $member->save();
-        if($member){
-            $request->session()->flash('success', 'added');
-            return redirect()->route('manage-members')->withInput();
-            }else{
-                $request->session()->flash('error', 'Something went wrong');
-                return redirect()->route('manage-members')->withInput();
-            }
+{
+    // Validate the incoming request data
+    $request->validate([
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'cat_id' => 'required',
+        'phone' => 'required|unique:members,phone,' . $member->id,
+        'address' => 'required',
+        'dob' => 'required',
+        'description' => 'required',
+        'support_status' => 'required',
+        // Add new fields below
+        // 'province_id' => 'required',
+        // 'district_id' => 'required',
+        // 'sector_id' => 'required',
+        // 'cell_id' => 'required',
+        // 'village_id' => 'required',
+        // 'resident' => 'required',
+        // 'identification' => 'required',
+        // 'disability' => 'required',
+        // 'parent_status' => 'required',
+        // 'father_name' => 'required',
+        // 'official_paper_type' => 'nullable',
+        // 'id_number' => 'required',
+        // 'phone_number' => 'required',
+        // 'job_type' => 'nullable',
+        // 'income_per_month' => 'nullable|numeric',
+        // 'house' => 'required',
+        // 'education_level' => 'nullable',
+        // 'disability_type' => 'nullable',
+        // 'head_of_family' => 'required',
+        // Mother's fields
+        // 'mother_name' => 'required',
+        // 'mother_dob' => 'required',
+        // 'mother_official_paper_type' => 'nullable',
+        // 'mother_id_number' => 'required',
+        // 'mother_phone_number' => 'required',
+        // 'mother_job_type' => 'nullable',
+        // 'mother_income_per_month' => 'nullable|numeric',
+        // 'mother_house' => 'required',
+        // 'mother_education_level' => 'nullable',
+        // 'mother_disability_type' => 'nullable',
+        // 'mother_head_of_family' => 'required',
+    ]);
+
+    // Update the member attributes
+    $member->first_name = $request->first_name;
+    $member->last_name = $request->last_name;
+    $member->cat_id = $request->cat_id;
+    $member->phone = $request->phone;
+    $member->address = $request->address;
+    $member->dob = $request->dob; // Assuming this is the correct field for date of birth
+    $member->description = $request->description;
+
+    // Add fields from the form
+    $member->province_id = $request->province_id;
+    $member->district_id = $request->district_id;
+    $member->sector_id = $request->sector_id;
+    $member->cell_id = $request->cell_id;
+    $member->village_id = $request->village_id;
+    $member->resident = $request->resident;
+    $member->identification = $request->identification;
+    $member->disability = $request->disability;
+    $member->parent_status = $request->parent_status;
+    $member->father_name = $request->father_name;
+    $member->official_paper_type = $request->official_paper_type;
+    $member->id_number = $request->id_number;
+    $member->phone_number = $request->phone_number;
+    $member->job_type = $request->job_type;
+    $member->income_per_month = $request->income_per_month;
+    $member->house = $request->house;
+    $member->education_level = $request->education_level;
+    $member->disability_type = $request->disability_type;
+    $member->head_of_family = $request->head_of_family;
+
+    // Add mother's fields
+    $member->mother_name = $request->mother_name;
+    $member->mother_dob = $request->mother_dob;
+    $member->mother_official_paper_type = $request->mother_official_paper_type;
+    $member->mother_id_number = $request->mother_id_number;
+    $member->mother_phone_number = $request->mother_phone_number;
+    $member->mother_job_type = $request->mother_job_type;
+    $member->mother_income_per_month = $request->mother_income_per_month;
+    $member->mother_house = $request->mother_house;
+    $member->mother_education_level = $request->mother_education_level;
+    $member->mother_disability_type = $request->mother_disability_type;
+    $member->mother_head_of_family = $request->mother_head_of_family;
+
+    // Handle conditional fields based on `cat_id`
+    if ($request->cat_id == 1) {
+        $member->hospital = $request->hospital;
+    } elseif ($request->cat_id == 2) {
+        $member->school_name = $request->school_name;
+        $member->sdms_code = $request->sdms_code;
+        $member->study_year = $request->study_year;
+    } else {
+        $member->other_support = $request->other_support;
     }
+
+    $member->user_id = auth()->user()->id;
+    $member->support_status = $request->support_status;
+
+    // Set status and accepted_level based on support_status
+    $member->status = ($request->support_status == 1) ? 1 : 0;
+    $member->accepted_level = ($request->support_status == 1) ? auth()->user()->role : 4;
+
+    $member->save();
+
+    if ($member) {
+        $request->session()->flash('success', 'Member updated successfully');
+        return redirect()->route('manage-members')->withInput();
+    } else {
+        $request->session()->flash('error', 'Something went wrong');
+        return redirect()->route('manage-members')->withInput();
+    }
+}
     /**
     * This function is used to delete manage CTR Tech
     *

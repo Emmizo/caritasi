@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\USSD\UssDController;
+use App\Http\Controllers\LocationController;
 
 /* Logout */
 Route::get('/logout', function () {
@@ -113,6 +114,18 @@ Route::group(['prefix' => '/communities', 'middleware' => ['auth','nocache','can
     Route::post('/status'    , 'CommunityController@status')->name('manage-community-status');
     Route::post('view-community','CommunityController@viewCommunity')->name('view-community');
 });
+#Parish
+Route::group(['prefix' => '/parish', 'middleware' => ['auth','nocache','can:Manage-Parish'], 'namespace' => 'App\Http\Controllers', 'page-group' => '/centrale'], function () {
+    Route::any('/list-parish','ParishController@getparishListAjax')->name('getParishListAjax');
+    Route::any('/add-parish','ParishController@add')->name('add-parish');
+    Route::post('/save-parish', 'ParishController@store')->name('manage-parish-save');
+    Route::get('/parish', 'ParishController@index')->name('manage-parish');
+    Route::post('/update', 'ParishController@update')->name('manage-parish-update');
+    Route::get('/edit/{id}', 'ParishController@edit')->name('manage-parish-edit');
+    Route::any('/delete/{id}', 'ParishController@delete')->name('manage-parish-delete');
+    Route::post('/status'    , 'ParishController@status')->name('manage-parish-status');
+    Route::post('view-parish','ParishController@viewParish')->name('view-Parish');
+});
 
 #support
 Route::group(['prefix' => '/support', 'middleware' => ['auth','nocache','can:Manage-Supports'], 'namespace' => 'App\Http\Controllers', 'page-group' => '/support'], function () {
@@ -134,3 +147,9 @@ Route::group(['prefix' => '/income', 'middleware' => ['auth','nocache','can:Mana
 });
 Route::post('/ussd', [USSDController::class, 'handleUSSD']);
 Route::post('/ussd/next', [UssdController::class, 'handleNext']);
+#location
+Route::get('/province', [LocationController::class, 'index'])->name('province');
+Route::get('/district', [LocationController::class, 'district'])->name('district');
+Route::get('/sector', [LocationController::class, 'sector'])->name('sector');
+Route::get('/cell', [LocationController::class, 'cell'])->name('cell');
+Route::get('/vellage'   , [LocationController::class, 'village'])->name('village');

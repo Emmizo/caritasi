@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "272a20bc0e1364658215ccbcd389d595",
+    "content-hash": "7ebacfc3b0c46e7c10e8be34bef2c223",
     "packages": [
         {
             "name": "africastalking/africastalking",
@@ -8159,6 +8159,50 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "aimedidierm/ahantu",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aimedidierm/ahantu.git",
+                "reference": "b9c38d32eb14aa08e741584f169b3982f5791f58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aimedidierm/ahantu/zipball/b9c38d32eb14aa08e741584f169b3982f5791f58",
+                "reference": "b9c38d32eb14aa08e741584f169b3982f5791f58",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ahantu\\Locations\\LocationsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ahantu\\Locations\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aime Didier MUGISHA",
+                    "email": "aimedidiermugisha@gmail.com"
+                }
+            ],
+            "description": "A Laravel package to help developers to seed Rwanda locations data (province, district, sector, cell, village) in Laravel application.",
+            "support": {
+                "issues": "https://github.com/aimedidierm/ahantu/issues",
+                "source": "https://github.com/aimedidierm/ahantu/tree/v1.0.0"
+            },
+            "time": "2024-07-01T23:57:23+00:00"
+        },
         {
             "name": "brianium/paratest",
             "version": "v7.4.3",

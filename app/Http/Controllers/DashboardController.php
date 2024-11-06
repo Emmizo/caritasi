@@ -8,6 +8,9 @@ use App\Models\Member;
 use App\Models\Community;
 use App\Models\Center;
 use App\Models\Support;
+use App\Models\Income;
+use DB;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -15,7 +18,7 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $data['users'] = User::where('is_delete',0)->count();
 
@@ -51,7 +54,7 @@ class DashboardController extends Controller
 
         $centrale  = Center::where(function ($centrale){
             return auth()->user()->role!=1 && auth()->user()->role !=5  ?
-            $centrale->where('user_id', auth()->user()->id) : '';
+            $centrale->where('parish_id', auth()->user()->role) : '';
         })->count();
 
         $data['centers'] = $centrale;
@@ -62,6 +65,8 @@ class DashboardController extends Controller
             return (auth()->user()->role!=1 && auth()->user()->role !=5  ?
                 $member->where('users.community_id', auth()->user()->community_id) : auth()->user()->role==4)?$member->where('users.centrale_id', auth()->user()->centrale_id):"";
         })->count();
+
+
         $data['supports'] = $support;
         return view('dashboard',$data);
         //

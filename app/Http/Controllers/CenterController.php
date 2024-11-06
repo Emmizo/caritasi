@@ -23,10 +23,12 @@ class CenterController extends Controller
     {
 
 
-         $data = Center::join('users','users.id','centers.user_id')->select("users.first_name","users.last_name","centers.*")->where('centers.is_deleted',0)->orderBy('centers.updated_at','DESC')
+         $data = Center::join('parish','parish.id','centers.parish_id')
+         ->join('users','users.id','parish.user_id')
+         ->select("users.first_name","users.last_name","centers.*")->where('centers.is_deleted',0)->orderBy('centers.updated_at','DESC')
          -> where(function ($data){
             return auth()->user()->role!=1 && auth()->user()->role !=5 ?
-            $data->where('user_id', auth()->user()->id) : '';
+            $data->where('parish_id', auth()->user()->parish_id) : '';
         })->get();
 
 
