@@ -6,6 +6,10 @@ use App\Models\Member;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Province;
+use App\Models\District;
+use App\Models\Sector;
+use App\Models\Village;
+use App\Models\Cell;
 
 class MemberController extends Controller
 {
@@ -277,6 +281,10 @@ return datatables()->of($members)
         $data['brVal'] = "Manage Beneficiares";
         $data['info'] = $member::find($request->id);
         $data['provinces']=  Province::all();
+        $data['districts']= District::all();
+        $data['sectors']= Sector::all();
+        $data['cells']= Cell::all();
+        $data['villages']= Village::all();
         return view('manage-members.edit', $data);
     }
 
@@ -336,7 +344,7 @@ return datatables()->of($members)
     $member->cat_id = $request->cat_id;
     $member->phone = $request->phone;
     $member->address = $request->address;
-    $member->dob = $request->dob; // Assuming this is the correct field for date of birth
+    $member->bod = $request->dob; // Assuming this is the correct field for date of birth
     $member->description = $request->description;
 
     // Add fields from the form
