@@ -41,6 +41,10 @@
                     <span class="nav_logo-name">Manage Grant</span> </a>
             </li>
             @endcan
+            <li><a href="{{ route('manage-predictor') }}" class="nav_logo"><i class="fa fa-mars-double fa-lg"
+                        aria-hidden="true"></i>
+                    <span class="nav_logo-name">Predication</span> </a>
+            </li>
                 @can('Manage-Users')
 
                 <li><a href="{{ route('manage-user') }}" class="nav_logo"><i class="fa fa-user-circle" aria-hidden="true"></i>

@@ -153,3 +153,10 @@ Route::get('/district', [LocationController::class, 'district'])->name('district
 Route::get('/sector', [LocationController::class, 'sector'])->name('sector');
 Route::get('/cell', [LocationController::class, 'cell'])->name('cell');
 Route::get('/vellage'   , [LocationController::class, 'village'])->name('village');
+
+#predictor route
+
+Route
+::group(['prefix' => '/predictor', 'middleware' => ['auth','nocache'], 'namespace' => 'App\Http\Controllers', 'page-group' => '/predictor'], function () {
+    Route::get('/predicate', 'PredictorController@index')->name('manage-predictor');
+});
