@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Laravel\Passport\Passport;
 use App\Models\User;
 use App\Models\Income;
+use App\Models\Support;
 use Illuminate\Support\Facades\Auth;
 use DB;
 class AppServiceProvider extends ServiceProvider
@@ -94,9 +95,24 @@ class AppServiceProvider extends ServiceProvider
                 }
             })
             ->first();
-
+$totalAmount = Support::join('members', 'members.id', '=', 'supports.member_id')
+    ->join('users', 'users.id', '=', 'members.user_id')
+    ->where(function ($query) {
+        if (auth()->user()->role == 2) {
+            $query->where('users.community_id', auth()->user()->community_id)->where('supports.status', 1);
+        } elseif (auth()->user()->role == 4) {
+            $query->where('users.centrale_id', auth()->user()->centrale_id)->where('supports.status', 4);
+        }
+        elseif (auth()->user()->role == 3) {
+            $query->where('supports.status', 3);
+        }
+        elseif (auth()->user()->role == 5) {
+            $query->where('supports.status', 5);
+        }
+    })
+    ->sum('supports.amount');
         // Assign the total amount to the data array
-        $data['amount'] = $sum->total_amount;
+        $data['amount'] = $sum->total_amount-$totalAmount;
     }
 
     // Share the data with all views

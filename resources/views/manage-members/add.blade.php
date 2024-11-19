@@ -274,10 +274,11 @@
     <!-- House (Yes/No) -->
     <div class="col-md-4 mb-3">
         <div class="form-group">
-            <label for="house">House<span class="text-danger">*</span></label>
-            <select class="form-control" id="house" name="house">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+            <label for="house">House owner<span class="text-danger">*</span></label>
+            <select class="form-control" id="father-house" name="house">
+                <option value="">Select house</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
             </select>
             <small class="text-danger">{{ $errors->first('house') }}</small>
         </div>
@@ -403,10 +404,11 @@
     <!-- House (Yes/No) -->
     <div class="col-md-4 mb-3">
         <div class="form-group">
-            <label for="mother_house">House<span class="text-danger">*</span></label>
+            <label for="mother_house">House Owner<span class="text-danger">*</span></label>
             <select class="form-control" id="mother_house" name="mother_house">
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
+                <option value="">Select house status</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
             </select>
             <small class="text-danger">{{ $errors->first('mother_house') }}</small>
         </div>
@@ -986,6 +988,16 @@ $('#village_id').append('<option value="' + value.id + '">' + value.name + '</op
 });
 }
 });
+});
+$(document).ready(function () {
+    $('#father-house').on('change', function(){
+        var house =$(this).val();
+        if(house == "Yes"){
+            $('#mother_house').val('Yes');
+        }else if(house == "No"){
+            $('#mother_house').val('No');
+        }
+    });
 });
 function toggleDisabilityDetails() {
 var disability = document.getElementById("disability").value;

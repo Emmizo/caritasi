@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Member;
 use App\Models\Category;
+use App\Models\Support;
 use Illuminate\Http\Request;
 use App\Models\Province;
 use App\Models\District;
@@ -252,7 +253,14 @@ return datatables()->of($members)
     $member->accepted_level = ($request->support_status == 1) ? auth()->user()->role : 4;
 
     $member->save();
-
+if ($request->support_status == 1) {
+     $add = Support::create([
+            'reasons' =>'Where able to support on our own',
+            'member_id' => $member->id,
+            'user_id' => \Auth::user()->id,
+            // 'amount' => $request->amount,
+        ]);
+}
     if ($member) {
         // $request->session()->flash('success', 'New beneficiary added successfully');
         // return redirect()->route('manage-members')->withInput();
@@ -400,7 +408,14 @@ return datatables()->of($members)
     $member->accepted_level = ($request->support_status == 1) ? auth()->user()->role : 4;
 
     $member->save();
-
+if ($request->support_status == 1) {
+     $add = Support::create([
+            'reasons' =>'Where able to support on our own',
+            'member_id' => $member->id,
+            'user_id' => \Auth::user()->id,
+            // 'amount' => $request->amount,
+        ]);
+}
     if ($member) {
         $request->session()->flash('success', 'Member updated successfully');
         return redirect()->route('manage-members')->withInput();
