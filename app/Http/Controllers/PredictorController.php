@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Member;
 
 use Illuminate\Http\Request;
 
@@ -9,60 +10,15 @@ class PredictorController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
     public function index()
     {
-         $data['title'] = "Predictions";
+        // Fetch real data from the database, without the 'category' column
+        $members = Member::select('first_name', 'last_name', 'phone', 'income_per_month', 'mother_income_per_month', 'disability', 'parent_status', 'house', 'disability_type')
+            ->get();
 
-
-        return view('manage-predictor.index', $data);
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Pass the members data to the view
+        return view('manage-predictor.index', compact('members')); // Passing $members to the view
     }
 }
