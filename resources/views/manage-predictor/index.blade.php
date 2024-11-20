@@ -1,37 +1,7 @@
 <style>
-   .loader {
-      width: 88px;
-      height: 88px;
-      border: 4px solid;
-      background: #e52f0540;
-      border-color: transparent #8a1d03 #8a1d03 transparent;
-      border-radius: 50%;
-      display: inline-block;
-      position: relative;
-      box-sizing: border-box;
-      animation: rotation 1s ease-in-out infinite;
-   }
-
-   .loader::after {
-      content: '';  
-      box-sizing: border-box;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      border: 12px solid;
-      border-color: transparent #8a1d03 #8a1d03 transparent;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-   }
-
-   @keyframes rotation {
-      0% {
-         transform: rotate(0deg);
-      }
-      100% {
-         transform: rotate(360deg);
-      }
-   }
+.wrapper, body, html {
+min-height: 0%!important;
+}
 </style>
 
 @extends('layouts.app')
@@ -48,8 +18,8 @@
                 </div>
             </div>
         </div>
-  
-
+</section>
+<section class="content">
     <div class="card" style="background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-left:40px; margin-right:40px;">
         <h1 class="mb-4" style="font-size: 28px; color: #333;">Member Support Predictor</h1>
         <p class="mb-4" style="font-size: 20px; color: #666;">Here is the AI-predicted list of the members who need support more than others.</p>
@@ -79,7 +49,7 @@
             </div>
         </div>
     </div>
-    </section>
+</section>
 @endsection
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>

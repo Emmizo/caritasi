@@ -35,7 +35,41 @@
     /* height: 100px;           You can adjust this height as needed */
     /* background-color: #f0f0f0; Optional background for better visualization */
 }
+//loading
+.loader {
+      width: 88px;
+      height: 88px;
+      border: 4px solid;
+      background: #e52f0540;
+      border-color: transparent #8a1d03 #8a1d03 transparent;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+      box-sizing: border-box;
+      animation: rotation 1s ease-in-out infinite;
+   }
 
+   .loader::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border: 12px solid;
+      border-color: transparent #8a1d03 #8a1d03 transparent;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+   }
+
+   @keyframes rotation {
+      0% {
+         transform: rotate(0deg);
+      }
+      100% {
+         transform: rotate(360deg);
+      }
+   }
+   //end here
 .blinking-circle {
     width: 100px;              /* Adjust size */
     height: 100px;             /* Adjust size */
