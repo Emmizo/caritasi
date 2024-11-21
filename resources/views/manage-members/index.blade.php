@@ -46,13 +46,13 @@
                                             <th>PHONE</th>
                                             <th>ADDRESS</th>
                                             <th>REASONS</th>
-                                            <th>DESCRIPTION</th>
+                                            {{-- <th>DESCRIPTION</th> --}}
                                             <th>CENTRALE NAME</th>
                                             <th>COMMUNITY NAME</th>
                                             <th>Support option</th>
                                             <th>CREATED BY</th>
                                             <th>UPDATED AT</th>
-
+                                            <th>Type of support</th>
                                             <th>STATUS</th>
 
                                             <th>ACTION</th>
@@ -211,11 +211,11 @@
                             name: 'category_name'
 
                         },
-                        {
-                            data: 'description',
-                            name: 'description'
+                        // {
+                        //     data: 'description',
+                        //     name: 'description'
 
-                        },
+                        // },
                         {
                         data: 'center_name',
                         name: 'center_name'
@@ -245,6 +245,10 @@
                             }
                         },
 
+                        {
+                        data: 'description',
+                        name: 'description'
+                        },
                         {
                             data: 'status',
                             name: 'status'

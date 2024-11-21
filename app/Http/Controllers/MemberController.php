@@ -99,9 +99,9 @@ return datatables()->of($members)
         // return $allowDiocesse;
        return '<input class="toggle-class view-box" type="checkbox" data-id="' . $member->id . '" ' . $status . ' data-toggle="toggle" data-on="Accepted" data-off="' . ($member->status == 0 ? 'Wait' : 'Rejected') . '" data-onstyle="success" data-offstyle="' . ($member->status == 0 ? 'default' : 'danger') . '" data-url="' . route('manage-members-status') . '" ' . $disabled . '>';
     })
-    ->editColumn('description', function($member) {
-        return '<button type="button" class="btn btn-primary view-category" data-toggle="modal" data-cat="' . $member->first_name . ' ' . $member->last_name . '" data-id-description="' . $member->description . '" data-target="#exampleModal">Description</button>';
-    })
+    // ->editColumn('description', function($member) {
+    //     return '<button type="button" class="btn btn-primary view-category" data-toggle="modal" data-cat="' . $member->first_name . ' ' . $member->last_name . '" data-id-description="' . $member->description . '" data-target="#exampleModal">Description</button>';
+    // })
     ->editColumn('support_status', function($member) {
          $status = $member->support_status == 2 ? 'checked' : '';
 
@@ -121,7 +121,7 @@ return datatables()->of($members)
             return "Not applied yet";
         }
     })
-    ->rawColumns(['action', 'status', 'description','support_status'])
+    ->rawColumns(['action', 'status', 'support_status'])
     ->make(true);
 
 
