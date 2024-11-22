@@ -251,7 +251,7 @@ return datatables()->of($members)
     // Set status and accepted_level based on support_status
     if($request->disability=="Yes" && $request->$request->parent_status =="All Parent Deceased" && $request->house == "No"  &&  $request->mother_income_per_month <= 100000 ||$request->income_per_month <= 100000){
     $member->status =  1;
-    }else if($request->disability=="No" && $request->$request->parent_status =="All Parents Alive" && $request->house == "Yes"  &&  $request->mother_income_per_month > 100000 ||$request->income_per_month <= 100000){
+    }else if($request->disability=="No" && $request->$request->parent_status =="All Parents Alive" && $request->house == "Yes"  &&  $request->mother_income_per_month > 100000 ||$request->income_per_month > 100000){
         $member->status =  2;
     }
     $member->accepted_level = ($request->support_status == 1) ? auth()->user()->role : 4;
