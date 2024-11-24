@@ -250,9 +250,9 @@ return datatables()->of($members)
 
    if (
     $request->disability == "Yes" &&
-    $request->parent_status == "All Parent Deceased" &&
+    $request->parent_status == "All Parents Deceased" &&
     $request->house == "No" &&
-    ($request->mother_income_per_month <= 100000 || $request->income_per_month <= 100000)
+    ($request->mother_income_per_month <= 100000 || $request->income_per_month <=100000)
 ) {
     $member->status = 1;
 } else if (
