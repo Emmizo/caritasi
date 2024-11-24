@@ -141,8 +141,8 @@
 <div class="col-md-4 mb-3">
     <div class="form-group">
         <label for="dob">Disability<span class="text-danger">*</span></label>
-        <select class="form-control " id="disablity" name="disablity">
-            <option value="">Select disablity</option>
+        <select class="form-control " id="disablity" name="disablity3">
+
                 <option value="">Select disability</option>
                 <option value="None">None</option>
                 <option value="Visual">Visual</option>
@@ -297,9 +297,11 @@
     <div class="col-md-4 mb-3">
         <div class="form-group">
             <label for="disability">Disability</label>
-            <select class="form-control" id="disability" name="disability" onchange="toggleDisabilityDetails()">
-                <option value="no">No</option>
-                <option value="yes">Yes</option>
+            <select class="form-control" id="disability" name="disability"
+            {{-- onchange="toggleDisabilityDetails()" --}}
+            >
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
             </select>
             <small class="text-danger">{{ $errors->first('disability') }}</small>
         </div>
@@ -428,7 +430,8 @@
         <div class="form-group">
             <label for="mother_disability">Disability</label>
             <select class="form-control" id="mother_disability" name="mother_disability"
-                onchange="toggleDisabilityDetails()">
+                {{-- onchange="toggleDisabilityDetails()" --}}
+                >
                 <option value="no">No</option>
                 <option value="yes">Yes</option>
             </select>
@@ -999,10 +1002,10 @@ $(document).ready(function () {
         }
     });
 });
-function toggleDisabilityDetails() {
-var disability = document.getElementById("disability").value;
-var disabilityDetails = document.getElementById("disability_details");
-disabilityDetails.style.display = disability === "yes" ? "block" : "none";
-}
+// function toggleDisabilityDetails() {
+// var disability = document.getElementById("disability").value;
+// var disabilityDetails = document.getElementById("disability_details");
+// disabilityDetails.style.display = disability === "yes" ? "block" : "none";
+// }
     </script>
 @endsection
