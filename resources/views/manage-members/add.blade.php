@@ -848,6 +848,12 @@
 
                 form_data.append(name, $("#" + getID).val());
                 });
+                // Loop through textarea elements
+                $('#add-members textarea').each(function() {
+                var getID = $(this).attr('id');
+                var name = $(this).attr('name');
+                form_data.append(name, $("#" + getID).val());
+                });
                 $.ajaxSetup({
                 headers: {
                 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
