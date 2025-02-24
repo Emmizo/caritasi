@@ -1,5 +1,5 @@
 <!-- jQuery -->
-<script src="{{ asset('/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -35,7 +35,7 @@
             'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    
+
 </script>
 
 

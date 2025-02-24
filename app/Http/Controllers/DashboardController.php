@@ -54,7 +54,7 @@ class DashboardController extends Controller
 
         $centrale  = Center::where(function ($centrale){
             return auth()->user()->role!=1 && auth()->user()->role !=5  ?
-            $centrale->where('parish_id', auth()->user()->role) : '';
+            $centrale->where('user_id', auth()->user()->role) : '';
         })->count();
 
         $data['centers'] = $centrale;

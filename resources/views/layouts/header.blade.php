@@ -12,7 +12,7 @@
     <!-- JavaScript Bundle with Popper -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('custom/sweetalert2/css/sweetalert2.min.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/slick.css') }}">
@@ -25,5 +25,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 </head>
