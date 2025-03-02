@@ -17,10 +17,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 class AuthController extends Controller
 {
-    // public function __construct()
-    // {
-    //    $this->middleware('auth', ['except' => ['index', 'login','register','forgotPassword','store','viewReset','reset','storePassword']]);
-    // }
+    
     public static function middleware(): array
     {
         return [

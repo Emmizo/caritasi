@@ -71,13 +71,6 @@ class CenterController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'center_name' => ['required',new UniqueCenterName()]
-        // ]);
-        // $center = new Center();
-        // $center->center_name = $request->center_name;
-        // $center->user_id = \Auth::user()->id;
-        // $center->save();
         // Validate the request using the custom rule
     $request->validate([
         'center_name' => ['required', new UniqueCenterName()],
