@@ -96,21 +96,7 @@ class SupportController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Support $support)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Support $support)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

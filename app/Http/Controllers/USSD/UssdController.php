@@ -77,11 +77,7 @@ private function viewMembers($inputSteps, $user)
     }
     $membersPerPage = 2; // Number of members per page
 
-    // Fetch members logic...
-   // Fetch the user by phone number
-    // $user = User::where("phone_number", $request->input('phone_number'))->first();
-
-    // Fetch members with pagination
+   
     // Initialize the page number from the request or default to 1
     $page = $request->input('page', 1);
     $membersPerPage = 2; // Number of members to show per page
