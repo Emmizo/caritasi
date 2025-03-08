@@ -120,11 +120,5 @@ class MemberController extends Controller
        return response()->json(["msg"=>'Declined',"status"=>200],200);
     }
    }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+
 }
