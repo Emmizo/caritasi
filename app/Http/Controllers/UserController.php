@@ -221,8 +221,7 @@ $query->whereIn('users.role', [2, 3])
 
         $userId = (new User)->createUser($info);
         $user = user::find($userId);
-        // print_r($user->id);
-        // exit();
+
         if($info['status']) {
             event(new UserRegisteredEvent($info));
          }

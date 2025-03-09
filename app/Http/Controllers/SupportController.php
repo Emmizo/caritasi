@@ -118,17 +118,10 @@ public function status(Request $request)
    {
        $id = $request->id;
        $status = $request->status;
-    //    return "id:".$id." status:".$status;
        if($id)
            return (new Support)->updateStatuses($id,$status);
        else
            return false;
    }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Support $support)
-    {
-        //
-    }
+
 }
