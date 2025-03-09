@@ -277,8 +277,7 @@ if ($request->support_status == 1) {
         ]);
 }
     if ($member) {
-        // $request->session()->flash('success', 'New beneficiary added successfully');
-        // return redirect()->route('manage-members')->withInput();
+
         return response()->json(["msg" =>'success','status'=>201],201);
     } else {
         $request->session()->flash('error', 'Something went wrong');

@@ -107,13 +107,7 @@ public function viewCommunity(Request $request){
     $data = Community::where('center_id',$request->center_ids)->get();
     return response()->json(['status' => 200, "message"=>"selected",'data'=>$data]);
 }
-    /**
-     * Display the specified resource.
-     */
-    public function show(Community $community)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.

@@ -18,13 +18,7 @@ class SupportController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
     public function getSupportListAjax(Request $request){
 
         $member = Support::join('members','members.id','supports.member_id')->join('categories','categories.id','members.cat_id')

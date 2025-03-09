@@ -172,11 +172,5 @@ class CenterController extends Controller
         else
             return false;
     }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Center $center)
-    {
-        //
-    }
+
 }
