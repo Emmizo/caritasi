@@ -175,11 +175,5 @@ public function viewCommunity(Request $request){
         else
             return false;
     }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Community $community)
-    {
-        //
-    }
+
 }

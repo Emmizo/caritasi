@@ -17,7 +17,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 class AuthController extends Controller
 {
-    
+
     public static function middleware(): array
     {
         return [
@@ -166,9 +166,7 @@ class AuthController extends Controller
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
+        
        if($status == Password::PASSWORD_RESET)
        {
            $request->session()->flash('success', 'Please login again with updated password');

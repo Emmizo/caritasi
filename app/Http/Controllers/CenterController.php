@@ -99,13 +99,7 @@ class CenterController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Center $center)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
