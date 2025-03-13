@@ -41,7 +41,7 @@ class SupportController extends Controller
              $editableColor =(auth()->user()-> role == 1?"": auth()->user()-> role == 4 && $member->statuses == 0|| auth()->user()-> role == 5 && $member->statuses == 0|| auth()->user()-> role == 3 && $member->statuses == 0||
                (auth()->user()->role == 2 && $member->support_status == 1))?'btn-success':'btn-warning';
             $action = "";
-        //    $disableEdit = (auth()->user()-> role == 1?"": auth()->user()-> role == 4 && $member->statuses == 0|| auth()->user()-> role == 5 && $member->statuses == 0|| auth()->user()-> role == 3 && $member->statuses == 0)? 'modal':'disable-modal';
+
         $disableEdit = (auth()->user()->role == 1 ||
                (auth()->user()->role == 4 && $member->statuses == 0) ||
                (auth()->user()->role == 5 && $member->statuses == 0) ||
