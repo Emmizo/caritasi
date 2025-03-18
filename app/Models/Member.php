@@ -17,10 +17,10 @@ class Member extends Model
     'last_name',
     'phone',
     'address',
-    'bod',  // Corrected from 'bod' to 'dob' based on the validation rules
+    'bod',
     'description',
     'support_status',
-    // Newly added fields based on the validation rules
+
     'province_id',
     'district_id',
     'sector_id',
