@@ -326,38 +326,7 @@ if ($request->support_status == 1) {
         'dob' => 'required',
         'description' => 'required',
         'support_status' => 'required',
-        // Add new fields below
-        // 'province_id' => 'required',
-        // 'district_id' => 'required',
-        // 'sector_id' => 'required',
-        // 'cell_id' => 'required',
-        // 'village_id' => 'required',
-        // 'resident' => 'required',
-        // 'identification' => 'required',
-        // 'disability' => 'required',
-        // 'parent_status' => 'required',
-        // 'father_name' => 'required',
-        // 'official_paper_type' => 'nullable',
-        // 'id_number' => 'required',
-        // 'phone_number' => 'required',
-        // 'job_type' => 'nullable',
-        // 'income_per_month' => 'nullable|numeric',
-        // 'house' => 'required',
-        // 'education_level' => 'nullable',
-        // 'disability_type' => 'nullable',
-        // 'head_of_family' => 'required',
-        // Mother's fields
-        // 'mother_name' => 'required',
-        // 'mother_dob' => 'required',
-        // 'mother_official_paper_type' => 'nullable',
-        // 'mother_id_number' => 'required',
-        // 'mother_phone_number' => 'required',
-        // 'mother_job_type' => 'nullable',
-        // 'mother_income_per_month' => 'nullable|numeric',
-        // 'mother_house' => 'required',
-        // 'mother_education_level' => 'nullable',
-        // 'mother_disability_type' => 'nullable',
-        // 'mother_head_of_family' => 'required',
+
     ]);
 
     // Update the member attributes
@@ -520,11 +489,5 @@ if ($request->support_status == 1) {
        else
            return false;
    }
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Member $member)
-    {
-        //
-    }
+
 }
